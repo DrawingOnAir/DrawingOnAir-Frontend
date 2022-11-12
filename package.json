@@ -1,6 +1,6 @@
 {
   "name": "drawingonair-frontend",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "contributors": [
     {
       "name": "양선종",
@@ -14,6 +14,7 @@
     "@testing-library/user-event": "^13.5.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-icons": "^4.6.0",
     "react-scripts": "5.0.1",
     "styled-components": "^5.3.6"
   },
