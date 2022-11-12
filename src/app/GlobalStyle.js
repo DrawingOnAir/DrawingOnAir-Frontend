@@ -13,7 +13,7 @@ const GlobalStyle = createGlobalStyle`
   body {
     background: ${PAGE_COLORS.MAIN_BACKGROUND};
     overflow: hidden;
-    font: 16px "sans-serif";
+    font: 16px 'Nunito', sans-serif;
   }
 
   li {
