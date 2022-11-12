@@ -4,12 +4,14 @@ import styled from "styled-components";
 
 import GlobalStyle from "./GlobalStyle";
 import HomePage from "../pages/HomePage";
+import Header from "../components/Header";
 
 function App() {
   return (
     <AppContainer>
       <GlobalStyle />
       <MainSection>
+        <Header />
         <HomePage />
       </MainSection>
     </AppContainer>
