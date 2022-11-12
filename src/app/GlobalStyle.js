@@ -1,4 +1,5 @@
 import { createGlobalStyle } from "styled-components";
+
 import PAGE_COLORS from "../config/pageColors";
 
 const GlobalStyle = createGlobalStyle`
