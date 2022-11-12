@@ -1,0 +1,15 @@
+@font-face {
+    font-family: "IrishGrover";
+    font-display: fallback;
+    src: url("./IrishGrover-Regular.ttf") format("truetype"), url("./IrishGrover-Regular.woff") format("woff"), url("./IrishGrover-Regular.eot?iefix") format("embedded-opentype");
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "JacquesFrancois";
+    font-display: fallback;
+    src: url("./JacquesFrancoisShadow-Regular.ttf") format("truetype"), url("./JacquesFrancoisShadow-Regular.woff") format("woff"), url("./JacquesFrancoisShadow-Regular.eot?iefix") format("embedded-opentype");
+    font-weight: 400;
+    font-style: normal;
+}

@@ -1,0 +1,7 @@
+const PAGE_COLORS = {
+  MAIN_COLOR: "#B9B8AC",
+  FONT_COLOR: "#00000",
+  MAIN_BACKGROUND: "#B9B8AC",
+};
+
+export default PAGE_COLORS;
