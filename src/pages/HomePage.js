@@ -27,10 +27,10 @@ const HomePageContainer = styled.div`
 `;
 
 const HomePageTitle = styled.div`
+  margin: -10rem 0 8rem 0;
   font-weight: 400;
   font-size: 6rem;
   white-space: nowrap;
-  margin: -10rem 0 8rem 0;
 `;
 
 const HomePageTitleAir = styled.span`
