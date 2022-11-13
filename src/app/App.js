@@ -28,10 +28,10 @@ const AppContainer = styled.div`
 `;
 
 const MainSection = styled.div`
-  width: 100%;
-  height: 100%;
   display: flex;
   flex-direction: column;
+  width: 100%;
+  height: 100%;
 `;
 
 export default App;

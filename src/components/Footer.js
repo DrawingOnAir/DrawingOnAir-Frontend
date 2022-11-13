@@ -18,9 +18,8 @@ const FooterContainer = styled.footer`
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 8vh;
+  height: 9vh;
   border-top: 0.1rem solid;
-  z-index: 1;
 `;
 
 const FooterButton = styled.button`

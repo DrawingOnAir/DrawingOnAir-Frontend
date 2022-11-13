@@ -25,7 +25,7 @@ const HeaderContainer = styled.header`
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 8vh;
+  height: 9vh;
   border-bottom: 0.1rem solid;
 `;
 
