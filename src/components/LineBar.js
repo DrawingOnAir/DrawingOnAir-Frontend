@@ -9,7 +9,7 @@ function LineBar() {
   return (
     <LineContainer>
       {LINE_THICKNESSES.map((thickness) => {
-        return <LineWidth thickness={thickness} />;
+        return <LineThickness thickness={thickness} />;
       })}
     </LineContainer>
   );
@@ -24,7 +24,7 @@ const LineContainer = styled.div`
   z-index: 9999;
 `;
 
-const LineWidth = styled.div`
+const LineThickness = styled.div`
   width: ${(props) => props.thickness};
   height: 3rem;
   margin: 0 3rem 0 1rem;
