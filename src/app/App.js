@@ -1,4 +1,5 @@
 import React from "react";
+import { Route, Routes } from "react-router-dom";
 
 import styled from "styled-components";
 
@@ -6,6 +7,7 @@ import GlobalStyle from "./GlobalStyle";
 import HomePage from "../pages/HomePage";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import MainPage from "../pages/MainPage";
 
 function App() {
   return (
@@ -13,7 +15,10 @@ function App() {
       <GlobalStyle />
       <MainSection>
         <Header />
-        <HomePage />
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/main" element={<MainPage />} />
+        </Routes>
         <Footer />
       </MainSection>
     </AppContainer>
