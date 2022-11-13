@@ -6,6 +6,7 @@ import PAGE_COLORS from "../config/pageColors";
 
 function Footer() {
   const handleClick = () => {};
+
   return (
     <FooterContainer>
       <FooterButton onClick={handleClick}>Main</FooterButton>
