@@ -5,9 +5,9 @@ import styled from "styled-components";
 
 import GlobalStyle from "./GlobalStyle";
 import HomePage from "../pages/HomePage";
+import MainPage from "../pages/MainPage";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import MainPage from "../pages/MainPage";
 
 function App() {
   return (
