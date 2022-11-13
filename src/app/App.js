@@ -5,6 +5,7 @@ import styled from "styled-components";
 import GlobalStyle from "./GlobalStyle";
 import HomePage from "../pages/HomePage";
 import Header from "../components/Header";
+import Footer from "../components/Footer";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <MainSection>
         <Header />
         <HomePage />
+        <Footer />
       </MainSection>
     </AppContainer>
   );
@@ -26,6 +28,8 @@ const AppContainer = styled.div`
 `;
 
 const MainSection = styled.div`
+  display: flex;
+  flex-direction: column;
   width: 100%;
   height: 100%;
 `;
