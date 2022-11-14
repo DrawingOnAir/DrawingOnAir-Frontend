@@ -3,7 +3,7 @@ import WebCam from "react-webcam";
 
 import styled from "styled-components";
 
-import setHandDetector from "../utils/setHandDector";
+import setHandDetector from "../utils/setHandDetector";
 import useInterval from "../hooks/useInterval";
 import LineBar from "../components/LineBar";
 import ColorBar from "../components/ColorBar";
