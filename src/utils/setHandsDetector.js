@@ -2,7 +2,7 @@ import * as handPoseDetection from "@tensorflow-models/hand-pose-detection";
 import "@tensorflow/tfjs-core";
 import "@tensorflow/tfjs-backend-webgl";
 
-const setHandDetector = async () => {
+const setHandsDetector = async () => {
   const hands = handPoseDetection.SupportedModels.MediaPipeHands;
   const detectorConfig = {
     runtime: "tfjs",
@@ -17,4 +17,4 @@ const setHandDetector = async () => {
   return handsDetector;
 };
 
-export default setHandDetector;
+export default setHandsDetector;

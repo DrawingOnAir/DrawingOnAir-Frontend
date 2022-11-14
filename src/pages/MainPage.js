@@ -1,9 +1,9 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import WebCam from "react-webcam";
 
 import styled from "styled-components";
 
-import setHandDetector from "../utils/setHandDetector";
+import setHandsDetector from "../utils/setHandsDetector";
 import useInterval from "../hooks/useInterval";
 import LineBar from "../components/LineBar";
 import ColorBar from "../components/ColorBar";
@@ -37,7 +37,7 @@ function MainPage() {
 
   useEffect(() => {
     const runHandPoseDetect = async () => {
-      const network = await setHandDetector();
+      const network = await setHandsDetector();
       console.log("HandPose model Loaded"); // To-Do : 삭제 예정, 추후 loaddingSpinner의 위치
       setNeuralNet(network);
     };
