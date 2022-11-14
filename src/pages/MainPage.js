@@ -1,16 +1,60 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import WebCam from "react-webcam";
 
 import styled from "styled-components";
 
+import setHandDetector from "../utils/setHandDector";
+import useInterval from "../hooks/useInterval";
 import LineBar from "../components/LineBar";
 import ColorBar from "../components/ColorBar";
 
 function MainPage() {
+  const [neuralNet, setNeuralNet] = useState(false);
+  const webcamRef = useRef(null);
+  const canvasRef = useRef(null);
+
+  const detect = async (network) => {
+    if (
+      typeof webcamRef.current !== "undefined" &&
+      webcamRef.current !== null &&
+      webcamRef.current.video.readyState === 4
+    ) {
+      const { video } = webcamRef.current;
+      const { videoWidth } = webcamRef.current.video;
+      const { videoHeight } = webcamRef.current.video;
+
+      webcamRef.current.video.width = videoWidth;
+      webcamRef.current.video.height = videoHeight;
+
+      canvasRef.current.width = videoWidth;
+      canvasRef.current.height = videoHeight;
+
+      const hand = await network.estimateHands(video);
+      const context = canvasRef.current.getContext("2d");
+      // draw(hand,context); TO-DO 추가 예정 Draw event
+    }
+  };
+
+  useEffect(() => {
+    const runHandPoseDetect = async () => {
+      const network = await setHandDetector();
+      console.log("HandPose model Loaded"); // To-Do : 삭제 예정, 추후 loaddingSpinner의 위치
+      setNeuralNet(network);
+    };
+
+    runHandPoseDetect();
+  }, []);
+
+  useInterval(() => {
+    if (neuralNet) {
+      detect(neuralNet);
+    }
+  }, 10);
+
   return (
     <MainPageContainer>
-      <WebCamera />
-      <Canvas />
+      <WebCamera ref={webcamRef} />
+      <Canvas ref={canvasRef} />
       <LineBar />
       <ColorBar />
     </MainPageContainer>
