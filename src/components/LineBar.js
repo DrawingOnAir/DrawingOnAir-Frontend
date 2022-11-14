@@ -9,7 +9,7 @@ function LineBar() {
   return (
     <LineContainer>
       {LINE_THICKNESSES.map((thickness) => {
-        return <LineThickness thickness={thickness} />;
+        return <LineThickness key={thickness} thickness={thickness} />;
       })}
     </LineContainer>
   );

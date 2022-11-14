@@ -8,7 +8,7 @@ function ColorBar() {
   return (
     <ColorContainer>
       {CIRCLE_COLORS.map((color) => {
-        return <ColorCircle color={color} />;
+        return <ColorCircle key={color} color={color} />;
       })}
     </ColorContainer>
   );
