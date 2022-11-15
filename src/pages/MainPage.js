@@ -7,6 +7,7 @@ import setHandsDetector from "../utils/setHandsDetector";
 import useInterval from "../hooks/useInterval";
 import LineBar from "../components/LineBar";
 import ColorBar from "../components/ColorBar";
+import { GestureEstimator, Gestures } from "../Fingerpose";
 
 function MainPage() {
   const [neuralNet, setNeuralNet] = useState(false);
@@ -30,8 +31,29 @@ function MainPage() {
       canvasRef.current.height = videoHeight;
 
       const hand = await network.estimateHands(video);
+
+      if (hand.length > 0) {
+        const GE = new GestureEstimator([
+          Gestures.DrawGesture,
+          Gestures.ClickGesture,
+          Gestures.ClearGesture,
+          Gestures.FinishGestrue,
+        ]);
+        const gesture = GE.estimate(hand[0], 8.5);
+
+        if (gesture.gestures !== undefined && gesture.gestures.length > 0) {
+          const confidence = gesture.gestures.map(
+            (prediction) => prediction.score,
+          );
+          const maxConfidence = confidence.indexOf(
+            Math.max.apply(null, confidence),
+          );
+
+          console.log(gesture.gestures[maxConfidence].name, confidence);
+        }
+      }
+
       const context = canvasRef.current.getContext("2d");
-      // draw(hand,context); TO-DO 추가 예정 Draw event
     }
   };
 
@@ -49,7 +71,7 @@ function MainPage() {
     if (neuralNet) {
       detect(neuralNet);
     }
-  }, 10);
+  }, 100);
 
   return (
     <MainPageContainer>
