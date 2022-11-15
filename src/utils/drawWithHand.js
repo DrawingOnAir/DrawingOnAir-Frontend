@@ -13,7 +13,7 @@ const drawWithHand = (
   context.strokeStyle = "black";
   context.lineWidth = 2.5;
 
-  if (gesture === "finish") {
+  if (gesture === "start") {
     context.beginPath();
     context.moveTo(x, y);
   }

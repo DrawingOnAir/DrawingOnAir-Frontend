@@ -27,9 +27,9 @@ function MainPage() {
     if (hand.length > 0) {
       const GE = new fingerPose.GestureEstimator([
         fingerPose.Gestures.DrawGesture,
+        fingerPose.Gestures.StartGesture,
         fingerPose.Gestures.ClickGesture,
         fingerPose.Gestures.ClearGesture,
-        fingerPose.Gestures.FinishGestrue,
       ]);
       const gesture = GE.estimate(hand[0], 8);
 
@@ -41,7 +41,7 @@ function MainPage() {
           Math.max.apply(null, confidence),
         );
 
-        if (gesture.gestures[maxConfidence].name === "finish") {
+        if (gesture.gestures[maxConfidence].name === "start") {
           const { x, y } = hand[0].keypoints[8];
 
           setOriginX(x);

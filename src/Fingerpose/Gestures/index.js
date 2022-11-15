@@ -1,11 +1,11 @@
 import ClickGesture from "./Click";
-import FinishGestrue from "./Finish";
+import StartGesture from "./Start";
 import DrawGesture from "./Draw";
 import ClearGesture from "./Clear";
 
 const Gestures = {
   ClickGesture,
-  FinishGestrue,
+  StartGesture,
   ClearGesture,
   DrawGesture,
 };
