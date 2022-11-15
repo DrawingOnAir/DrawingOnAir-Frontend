@@ -4,17 +4,64 @@ import WebCam from "react-webcam";
 import styled from "styled-components";
 
 import setHandsDetector from "../utils/setHandsDetector";
+import drawWithHand from "../utils/drawWithHand";
 import useInterval from "../hooks/useInterval";
 import LineBar from "../components/LineBar";
 import ColorBar from "../components/ColorBar";
 import * as fingerPose from "../Fingerpose";
 
 function MainPage() {
-  const [neuralNet, setNeuralNet] = useState(false);
+  const [neuralNet, setNeuralNet] = useState(null);
+  const [ctx, setCtx] = useState(null);
+  const [webCam, setWebCam] = useState(null);
+  const [canvasWidth, setCanvasWidth] = useState(null);
+  const [canvasHeight, setCanvasHeight] = useState(null);
+  const [originX, setOriginX] = useState(null);
+  const [originY, setOriginY] = useState(null);
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
 
-  const detect = async (network) => {
+  const detect = async (network, video, X, Y) => {
+    const hand = await network.estimateHands(video);
+
+    if (hand.length > 0) {
+      const GE = new fingerPose.GestureEstimator([
+        fingerPose.Gestures.DrawGesture,
+        fingerPose.Gestures.ClickGesture,
+        fingerPose.Gestures.ClearGesture,
+        fingerPose.Gestures.FinishGestrue,
+      ]);
+      const gesture = GE.estimate(hand[0], 8);
+
+      if (gesture.gestures !== undefined && gesture.gestures.length > 0) {
+        const confidence = gesture.gestures.map(
+          (prediction) => prediction.score,
+        );
+        const maxConfidence = confidence.indexOf(
+          Math.max.apply(null, confidence),
+        );
+
+        if (gesture.gestures[maxConfidence].name === "finish") {
+          const { x, y } = hand[0].keypoints[8];
+
+          setOriginX(x);
+          setOriginY(y);
+        }
+
+        drawWithHand(
+          hand,
+          ctx,
+          gesture.gestures[maxConfidence].name,
+          canvasWidth,
+          canvasHeight,
+          X,
+          Y,
+        );
+      }
+    }
+  };
+
+  const setCanvasAndWebCam = () => {
     if (
       typeof webcamRef.current !== "undefined" &&
       webcamRef.current !== null &&
@@ -30,30 +77,12 @@ function MainPage() {
       canvasRef.current.width = videoWidth;
       canvasRef.current.height = videoHeight;
 
-      const hand = await network.estimateHands(video);
-
-      if (hand.length > 0) {
-        const GE = new fingerPose.GestureEstimator([
-          fingerPose.Gestures.DrawGesture,
-          fingerPose.Gestures.ClickGesture,
-          fingerPose.Gestures.ClearGesture,
-          fingerPose.Gestures.FinishGestrue,
-        ]);
-        const gesture = GE.estimate(hand[0], 8.5);
-
-        if (gesture.gestures !== undefined && gesture.gestures.length > 0) {
-          const confidence = gesture.gestures.map(
-            (prediction) => prediction.score,
-          );
-          const maxConfidence = confidence.indexOf(
-            Math.max.apply(null, confidence),
-          );
-
-          console.log(gesture.gestures[maxConfidence].name, confidence);
-        }
-      }
-
       const context = canvasRef.current.getContext("2d");
+
+      setCanvasWidth(videoWidth);
+      setCanvasHeight(videoHeight);
+      setWebCam(video);
+      setCtx(context);
     }
   };
 
@@ -61,6 +90,7 @@ function MainPage() {
     const runHandPoseDetect = async () => {
       const network = await setHandsDetector();
       console.log("HandPose model Loaded"); // To-Do : 삭제 예정, 추후 loaddingSpinner의 위치
+
       setNeuralNet(network);
     };
 
@@ -68,8 +98,12 @@ function MainPage() {
   }, []);
 
   useInterval(() => {
+    if (!ctx) {
+      setCanvasAndWebCam();
+    }
+
     if (neuralNet) {
-      detect(neuralNet);
+      detect(neuralNet, webCam, originX, originY);
     }
   }, 100);
 

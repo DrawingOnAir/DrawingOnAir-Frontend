@@ -388,4 +388,4 @@ export default class FingerPoseEstimator {
 
     return slope;
   }
-}
+};
