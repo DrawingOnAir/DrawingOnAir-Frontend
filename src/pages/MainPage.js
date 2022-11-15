@@ -7,7 +7,7 @@ import setHandsDetector from "../utils/setHandsDetector";
 import useInterval from "../hooks/useInterval";
 import LineBar from "../components/LineBar";
 import ColorBar from "../components/ColorBar";
-import { GestureEstimator, Gestures } from "../Fingerpose";
+import * as fingerPose from "../Fingerpose";
 
 function MainPage() {
   const [neuralNet, setNeuralNet] = useState(false);
@@ -33,11 +33,11 @@ function MainPage() {
       const hand = await network.estimateHands(video);
 
       if (hand.length > 0) {
-        const GE = new GestureEstimator([
-          Gestures.DrawGesture,
-          Gestures.ClickGesture,
-          Gestures.ClearGesture,
-          Gestures.FinishGestrue,
+        const GE = new fingerPose.GestureEstimator([
+          fingerPose.Gestures.DrawGesture,
+          fingerPose.Gestures.ClickGesture,
+          fingerPose.Gestures.ClearGesture,
+          fingerPose.Gestures.FinishGestrue,
         ]);
         const gesture = GE.estimate(hand[0], 8.5);
 
