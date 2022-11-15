@@ -2,7 +2,7 @@ import { Finger, FingerCurl, FingerDirection } from "../FingerDescription";
 import GestureDescription from "../GestureDescription";
 
 // 제스쳐: 검지만 위로.
-const drawDescription = new GestureDescription("indexFinger");
+const drawDescription = new GestureDescription("draw");
 
 // 엄지:
 drawDescription.addDirection(Finger.Thumb, FingerDirection.VerticalUp, 1.0);

@@ -97,4 +97,4 @@ export default class GestureDescription {
 
     return finalScore;
   }
-}
+};
