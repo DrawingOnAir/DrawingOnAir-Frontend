@@ -27,6 +27,9 @@ function MainPage() {
 
   const compositingType = useSelector((state) => state.compositingData);
   const canvasColor = useSelector((state) => state.selectingColor);
+  const canvasLineThickness = useSelector(
+    (state) => state.selectingLineThickness,
+  );
 
   const detect = async (network, video) => {
     const hand = await network.estimateHands(video);
@@ -67,6 +70,7 @@ function MainPage() {
           newCtx,
           compositingType,
           canvasColor,
+          canvasLineThickness,
         );
       }
     }
