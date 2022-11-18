@@ -1,11 +1,19 @@
-import React, { useRef } from "react";
+import React from "react";
+import { useDispatch } from "react-redux";
 
 import styled from "styled-components";
 
 import CIRCLE_COLORS from "../config/circleColors";
+import { changeColors } from "../features/selectColorReducer";
 
 function ColorBar() {
-  const colorRefs = useRef({});
+  const dispatch = useDispatch();
+
+  const handleClick = (event, color) => {
+    event.preventDefault();
+    dispatch(changeColors(color));
+  };
+
   return (
     <ColorContainer>
       {CIRCLE_COLORS.map((color) => {
@@ -13,9 +21,7 @@ function ColorBar() {
           <ColorCircle
             key={color}
             color={color}
-            ref={(element) => {
-              colorRefs.current[color] = element;
-            }}
+            onClick={(event) => handleClick(event, color)}
           />
         );
       })}

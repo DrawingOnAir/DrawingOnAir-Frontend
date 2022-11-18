@@ -1,19 +1,10 @@
 /* eslint-disable prefer-destructuring */
-const strokeStyle = "default";
 const lineWidth = "default";
 
 let newCanvasX = null;
 let newCanvasY = null;
 let pathsry = [];
 let points = [];
-
-const checkStrokeStyle = (context) => {
-  if (strokeStyle === "default") {
-    context.strokeStyle = "black";
-  }
-
-  context.strokeStyle = strokeStyle;
-};
 
 const checkLineWidth = (context) => {
   if (lineWidth === "default") {
@@ -33,11 +24,12 @@ const drawWithHand = (
   originY,
   newContext,
   compositingType,
+  canvasColor,
 ) => {
   const { keypoints } = hand[0];
   const { x, y } = keypoints[8];
 
-  checkStrokeStyle(context);
+  context.strokeStyle = canvasColor;
   checkLineWidth(context);
 
   if (points.length === 0) {
@@ -53,13 +45,13 @@ const drawWithHand = (
     context.lineTo(x, y);
     context.stroke();
     points.push([x, y]);
-
     if (
       x - 15 < Math.floor(originX) &&
       Math.floor(originX) < x + 15 &&
       y - 15 < Math.floor(originY) &&
       Math.floor(originY) < y + 15
     ) {
+      context.fillStyle = canvasColor;
       context.fill();
     }
   }
@@ -114,6 +106,7 @@ const drawWithHand = (
                 arr[arr.length - 1][1] - 15 < Math.floor(arr[0][1]) &&
                 Math.floor(arr[0][1]) < arr[arr.length - 1][1] + 15
               ) {
+                context.fillStyle = canvasColor;
                 context.fill();
               }
 
@@ -151,6 +144,7 @@ const drawWithHand = (
                 arr[arr.length - 1][1] - 15 < Math.floor(arr[0][1]) &&
                 Math.floor(arr[0][1]) < arr[arr.length - 1][1] + 15
               ) {
+                context.fillStyle = canvasColor;
                 context.fill();
               }
 
@@ -188,6 +182,7 @@ const drawWithHand = (
                 arr[arr.length - 1][1] - 15 < Math.floor(arr[0][1]) &&
                 Math.floor(arr[0][1]) < arr[arr.length - 1][1] + 15
               ) {
+                context.fillStyle = canvasColor;
                 context.fill();
               }
 
@@ -225,6 +220,7 @@ const drawWithHand = (
                 arr[arr.length - 1][1] - 15 < Math.floor(arr[0][1]) &&
                 Math.floor(arr[0][1]) < arr[arr.length - 1][1] + 15
               ) {
+                context.fillStyle = canvasColor;
                 context.fill();
               }
 
