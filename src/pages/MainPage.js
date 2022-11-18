@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import WebCam from "react-webcam";
+import { useSelector } from "react-redux";
 
 import styled from "styled-components";
 
@@ -8,11 +9,13 @@ import drawWithHand from "../utils/drawWithHand";
 import useInterval from "../hooks/useInterval";
 import LineBar from "../components/LineBar";
 import ColorBar from "../components/ColorBar";
+import CompositeBar from "../components/CompositeBar";
 import * as fingerPose from "../Fingerpose";
 
 function MainPage() {
   const [neuralNet, setNeuralNet] = useState(null);
   const [ctx, setCtx] = useState(null);
+  const [newCtx, setNewCtx] = useState(null);
   const [webCam, setWebCam] = useState(null);
   const [canvasWidth, setCanvasWidth] = useState(null);
   const [canvasHeight, setCanvasHeight] = useState(null);
@@ -20,16 +23,19 @@ function MainPage() {
   const [originY, setOriginY] = useState(null);
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
+  const newCanvasRef = useRef(null);
+  const compositingType = useSelector((state) => state.compositingData);
 
-  const detect = async (network, video, X, Y) => {
+  const detect = async (network, video) => {
     const hand = await network.estimateHands(video);
 
     if (hand.length > 0) {
       const GE = new fingerPose.GestureEstimator([
         fingerPose.Gestures.DrawGesture,
         fingerPose.Gestures.StartGesture,
-        fingerPose.Gestures.ClickGesture,
+        fingerPose.Gestures.DragGesture,
         fingerPose.Gestures.ClearGesture,
+        fingerPose.Gestures.ExampleGesture,
       ]);
       const gesture = GE.estimate(hand[0], 8);
 
@@ -54,8 +60,10 @@ function MainPage() {
           gesture.gestures[maxConfidence].name,
           canvasWidth,
           canvasHeight,
-          X,
-          Y,
+          originX,
+          originY,
+          newCtx,
+          compositingType,
         );
       }
     }
@@ -77,11 +85,16 @@ function MainPage() {
       canvasRef.current.width = videoWidth;
       canvasRef.current.height = videoHeight;
 
+      newCanvasRef.current.width = videoWidth;
+      newCanvasRef.current.height = videoHeight;
+
       const context = canvasRef.current.getContext("2d");
+      const newContext = newCanvasRef.current.getContext("2d");
 
       setCanvasWidth(videoWidth);
       setCanvasHeight(videoHeight);
       setWebCam(video);
+      setNewCtx(newContext);
       setCtx(context);
     }
   };
@@ -103,7 +116,7 @@ function MainPage() {
     }
 
     if (neuralNet) {
-      detect(neuralNet, webCam, originX, originY);
+      detect(neuralNet, webCam);
     }
   }, 100);
 
@@ -111,6 +124,8 @@ function MainPage() {
     <MainPageContainer>
       <WebCamera ref={webcamRef} />
       <Canvas ref={canvasRef} />
+      <NewCanvas ref={newCanvasRef} />
+      <CompositeBar />
       <LineBar />
       <ColorBar />
     </MainPageContainer>
@@ -133,6 +148,15 @@ const WebCamera = styled(WebCam)`
 `;
 
 const Canvas = styled.canvas`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transform: rotateY(180deg);
+  z-index: 9999;
+`;
+
+const NewCanvas = styled.canvas`
   position: absolute;
   width: 100%;
   height: 100%;

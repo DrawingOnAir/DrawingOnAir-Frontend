@@ -10,6 +10,7 @@
   "private": true,
   "dependencies": {
     "@mediapipe/hands": "^0.4.1646424915",
+    "@reduxjs/toolkit": "^1.9.0",
     "@tensorflow-models/hand-pose-detection": "^2.0.0",
     "@tensorflow/tfjs": "^4.0.0",
     "@tensorflow/tfjs-backend-webgl": "^4.0.0",
@@ -21,9 +22,12 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.6.0",
+    "react-redux": "^8.0.5",
     "react-router-dom": "^6.4.3",
     "react-scripts": "5.0.1",
     "react-webcam": "^7.0.1",
+    "redux": "^4.2.0",
+    "redux-logger": "^3.0.6",
     "styled-components": "^5.3.6"
   },
   "scripts": {

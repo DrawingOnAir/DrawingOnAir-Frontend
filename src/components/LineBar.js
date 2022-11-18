@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 
 import styled from "styled-components";
 
@@ -6,10 +6,22 @@ import LINE_THICKNESSES from "../config/lineThicknesses";
 import PAGE_COLORS from "../config/pageColors";
 
 function LineBar() {
+  const lineRefs = useRef({});
+  useEffect(() => {
+    console.log(lineRefs.current["1px"]);
+  }, []);
   return (
     <LineContainer>
       {LINE_THICKNESSES.map((thickness) => {
-        return <LineThickness key={thickness} thickness={thickness} />;
+        return (
+          <LineThickness
+            key={thickness}
+            thickness={thickness}
+            ref={(element) => {
+              lineRefs.current[thickness] = element;
+            }}
+          />
+        );
       })}
     </LineContainer>
   );
