@@ -9,7 +9,7 @@ import drawWithHand from "../utils/drawWithHand";
 import useInterval from "../hooks/useInterval";
 import LineBar from "../components/LineBar";
 import ColorBar from "../components/ColorBar";
-import CompositeBar from "../components/CompositeBar";
+import CompositingBar from "../components/CompositingBar";
 import * as fingerPose from "../Fingerpose";
 
 function MainPage() {
@@ -125,7 +125,7 @@ function MainPage() {
       <WebCamera ref={webcamRef} />
       <Canvas ref={canvasRef} />
       <NewCanvas ref={newCanvasRef} />
-      <CompositeBar />
+      <CompositingBar />
       <LineBar />
       <ColorBar />
     </MainPageContainer>

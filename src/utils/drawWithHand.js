@@ -1,6 +1,7 @@
 /* eslint-disable prefer-destructuring */
 const strokeStyle = "default";
 const lineWidth = "default";
+
 let newCanvasX = null;
 let newCanvasY = null;
 let pathsry = [];
@@ -10,6 +11,7 @@ const checkStrokeStyle = (context) => {
   if (strokeStyle === "default") {
     context.strokeStyle = "black";
   }
+
   context.strokeStyle = strokeStyle;
 };
 
@@ -17,6 +19,7 @@ const checkLineWidth = (context) => {
   if (lineWidth === "default") {
     context.lineWidth = 2.5;
   }
+
   context.lineWidth = lineWidth;
 };
 
@@ -33,6 +36,7 @@ const drawWithHand = (
 ) => {
   const { keypoints } = hand[0];
   const { x, y } = keypoints[8];
+
   checkStrokeStyle(context);
   checkLineWidth(context);
 
@@ -49,6 +53,7 @@ const drawWithHand = (
     context.lineTo(x, y);
     context.stroke();
     points.push([x, y]);
+
     if (
       x - 15 < Math.floor(originX) &&
       Math.floor(originX) < x + 15 &&
@@ -68,6 +73,7 @@ const drawWithHand = (
   if (gesture === "drag") {
     const w = x - originX;
     const h = y - originY;
+
     newCanvasX = x;
     newCanvasY = y;
     newContext.clearRect(0, 0, width, height);
@@ -77,12 +83,14 @@ const drawWithHand = (
   if (gesture !== "drag") {
     if (newCanvasX && newCanvasY) {
       context.clearRect(originX, originY, x - originX, y - originY);
+
       if (pathsry.length !== 0) {
         pathsry = pathsry.filter((arr, index) => {
           const maximumX = arr.reduce((a, b) => Math.max(a, b[0]), -Infinity);
           const minimumX = arr.reduce((a, b) => Math.min(a, b[0]), Infinity);
           const maximumY = arr.reduce((a, b) => Math.max(a, b[1]), -Infinity);
           const minimumY = arr.reduce((a, b) => Math.min(a, b[1]), Infinity);
+
           if (x > originX && y > originY) {
             if (
               maximumX >= originX &&
@@ -91,11 +99,13 @@ const drawWithHand = (
               minimumY <= y
             ) {
               context.globalCompositeOperation = compositingType;
+
               if (index === 0) {
                 context.globalCompositeOperation = "source-over";
               }
               context.beginPath();
               context.moveTo(arr[0][0], arr[0][1]);
+
               for (let i = 1; i < arr.length; i += 1) {
                 context.lineTo(arr[i][0], arr[i][1]);
                 context.stroke();
@@ -108,7 +118,9 @@ const drawWithHand = (
               ) {
                 context.fill();
               }
+
               context.globalCompositeOperation = "source-over";
+
               return false;
             }
             return true;
@@ -122,15 +134,18 @@ const drawWithHand = (
               minimumY <= originY
             ) {
               context.globalCompositeOperation = compositingType;
+
               if (index === 0) {
                 context.globalCompositeOperation = "source-over";
               }
               context.beginPath();
               context.moveTo(arr[0][0], arr[0][1]);
+
               for (let i = 1; i < arr.length; i += 1) {
                 context.lineTo(arr[i][0], arr[i][1]);
                 context.stroke();
               }
+
               if (
                 arr[arr.length - 1][0] - 15 < Math.floor(arr[0][0]) &&
                 Math.floor(arr[0][0]) < arr[arr.length - 1][0] + 15 &&
@@ -139,7 +154,9 @@ const drawWithHand = (
               ) {
                 context.fill();
               }
+
               context.globalCompositeOperation = "source-over";
+              
               return false;
             }
             return true;
@@ -153,15 +170,19 @@ const drawWithHand = (
               minimumX <= y
             ) {
               context.globalCompositeOperation = compositingType;
+              
               if (index === 0) {
                 context.globalCompositeOperation = "source-over";
               }
+              
               context.beginPath();
               context.moveTo(arr[0][0], arr[0][1]);
+              
               for (let i = 1; i < arr.length; i += 1) {
                 context.lineTo(arr[i][0], arr[i][1]);
                 context.stroke();
               }
+              
               if (
                 arr[arr.length - 1][0] - 15 < Math.floor(arr[0][0]) &&
                 Math.floor(arr[0][0]) < arr[arr.length - 1][0] + 15 &&
@@ -170,7 +191,9 @@ const drawWithHand = (
               ) {
                 context.fill();
               }
+              
               context.globalCompositeOperation = "source-over";
+              
               return false;
             }
             return true;
@@ -184,15 +207,19 @@ const drawWithHand = (
               minimumY <= originY
             ) {
               context.globalCompositeOperation = compositingType;
+              
               if (index === 0) {
                 context.globalCompositeOperation = "source-over";
               }
+              
               context.beginPath();
               context.moveTo(arr[0][0], arr[0][1]);
+              
               for (let i = 1; i < arr.length; i += 1) {
                 context.lineTo(arr[i][0], arr[i][1]);
                 context.stroke();
               }
+              
               if (
                 arr[arr.length - 1][0] - 15 < Math.floor(arr[0][0]) &&
                 Math.floor(arr[0][0]) < arr[arr.length - 1][0] + 15 &&
@@ -201,7 +228,9 @@ const drawWithHand = (
               ) {
                 context.fill();
               }
+              
               context.globalCompositeOperation = "source-over";
+              
               return false;
             }
             return true;
@@ -213,6 +242,7 @@ const drawWithHand = (
       newCanvasX = null;
       newCanvasY = null;
     }
+    
     newContext.clearRect(0, 0, width, height);
   }
 
@@ -220,6 +250,7 @@ const drawWithHand = (
     if (points.length !== 1) {
       pathsry.push(points);
     }
+
     points = [];
   }
 };
