@@ -1,3 +1,3 @@
-const LINE_THICKNESSES = ["1px", "2px", "3px", "4px", "5px"];
+const LINE_THICKNESSES = [1, 5, 10, 15, 20];
 
 export default LINE_THICKNESSES;

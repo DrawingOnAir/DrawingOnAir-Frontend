@@ -1,15 +1,20 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
+import { useDispatch } from "react-redux";
 
 import styled from "styled-components";
 
 import LINE_THICKNESSES from "../config/lineThicknesses";
 import PAGE_COLORS from "../config/pageColors";
+import { changelineThicknesses } from "../features/selectLineThicknessReducer";
 
 function LineBar() {
-  const lineRefs = useRef({});
-  useEffect(() => {
-    console.log(lineRefs.current["1px"]);
-  }, []);
+  const dispatch = useDispatch();
+
+  const handleClick = (event, thickness) => {
+    event.preventDefault();
+    dispatch(changelineThicknesses(thickness));
+  };
+
   return (
     <LineContainer>
       {LINE_THICKNESSES.map((thickness) => {
@@ -17,9 +22,7 @@ function LineBar() {
           <LineThickness
             key={thickness}
             thickness={thickness}
-            ref={(element) => {
-              lineRefs.current[thickness] = element;
-            }}
+            onClick={(event) => handleClick(event, thickness)}
           />
         );
       })}
@@ -30,16 +33,19 @@ function LineBar() {
 const LineContainer = styled.div`
   display: flex;
   justify-content: center;
+  flex-direction: column;
+  align-items: flex-end;
   position: absolute;
-  top: 1%;
   width: 100%;
+  height: 100%;
+  text-align: center;
   z-index: 9999;
 `;
 
 const LineThickness = styled.div`
-  width: ${(props) => props.thickness};
+  width: ${(props) => `${props.thickness}px`};
   height: 3rem;
-  margin: 0 3rem 0 1rem;
+  margin: 1rem 3rem;
   background-color: ${PAGE_COLORS.FONT_COLOR};
   transform: rotate(-45deg);
   cursor: pointer;

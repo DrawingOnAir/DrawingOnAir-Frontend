@@ -6,14 +6,6 @@ let newCanvasY = null;
 let pathsry = [];
 let points = [];
 
-const checkLineWidth = (context) => {
-  if (lineWidth === "default") {
-    context.lineWidth = 2.5;
-  }
-
-  context.lineWidth = lineWidth;
-};
-
 const drawWithHand = (
   hand,
   context,
@@ -25,12 +17,13 @@ const drawWithHand = (
   newContext,
   compositingType,
   canvasColor,
+  canvasLineThickness,
 ) => {
   const { keypoints } = hand[0];
   const { x, y } = keypoints[8];
 
   context.strokeStyle = canvasColor;
-  checkLineWidth(context);
+  context.lineWidth = canvasLineThickness;
 
   if (points.length === 0) {
     points.push([originX, originY]);
