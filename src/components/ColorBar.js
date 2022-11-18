@@ -1,14 +1,23 @@
-import React from "react";
+import React, { useRef } from "react";
 
 import styled from "styled-components";
 
 import CIRCLE_COLORS from "../config/circleColors";
 
 function ColorBar() {
+  const colorRefs = useRef({});
   return (
     <ColorContainer>
       {CIRCLE_COLORS.map((color) => {
-        return <ColorCircle key={color} color={color} />;
+        return (
+          <ColorCircle
+            key={color}
+            color={color}
+            ref={(element) => {
+              colorRefs.current[color] = element;
+            }}
+          />
+        );
       })}
     </ColorContainer>
   );
