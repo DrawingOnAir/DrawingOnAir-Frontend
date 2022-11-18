@@ -24,7 +24,9 @@ function MainPage() {
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
   const newCanvasRef = useRef(null);
+
   const compositingType = useSelector((state) => state.compositingData);
+  const canvasColor = useSelector((state) => state.selectingColor);
 
   const detect = async (network, video) => {
     const hand = await network.estimateHands(video);
@@ -64,6 +66,7 @@ function MainPage() {
           originY,
           newCtx,
           compositingType,
+          canvasColor,
         );
       }
     }
