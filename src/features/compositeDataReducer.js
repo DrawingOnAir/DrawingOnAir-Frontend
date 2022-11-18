@@ -1,11 +1,11 @@
 import { createAction, createReducer } from "@reduxjs/toolkit";
 
-import COMPOSITE_TYPE from "../config/compositeType";
+import COMPOSITING_TYPE from "../config/compositingType";
 
-export const changeCompositeType = createAction("chageCompositeType");
+export const changeCompositingType = createAction("changeCompositingType");
 
-const compositeDataReducer = createReducer(COMPOSITE_TYPE[0], {
-  [changeCompositeType]: (state, action) => {
+const compositeDataReducer = createReducer(COMPOSITING_TYPE[0], {
+  [changeCompositingType]: (state, action) => {
     return action.payload;
   },
 });
