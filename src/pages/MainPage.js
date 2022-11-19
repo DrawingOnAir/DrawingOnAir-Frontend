@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, forwardRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import WebCam from "react-webcam";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -15,6 +15,7 @@ import { getMainTag } from "../features/getMainDataReducer";
 
 function MainPage() {
   const dispatch = useDispatch();
+
   const [neuralNet, setNeuralNet] = useState(null);
   const [ctx, setCtx] = useState(null);
   const [newCtx, setNewCtx] = useState(null);
@@ -23,6 +24,7 @@ function MainPage() {
   const [canvasHeight, setCanvasHeight] = useState(null);
   const [originX, setOriginX] = useState(null);
   const [originY, setOriginY] = useState(null);
+
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
   const newCanvasRef = useRef(null);

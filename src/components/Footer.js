@@ -11,6 +11,7 @@ function Footer() {
 
   const onSaveAs = (url, filename) => {
     const link = document.createElement("a");
+
     document.body.appendChild(link);
     link.href = url;
     link.download = filename;
@@ -21,9 +22,11 @@ function Footer() {
   const handleClick = async () => {
     try {
       const canvas = await html2canvas(mainTagElement.current);
+
       canvas.getContext("2d", {
         willReadFrequently: true,
       });
+
       onSaveAs(canvas.toDataURL("image/png"), "image-download.png");
     } catch (error) {
       console.error(error);
