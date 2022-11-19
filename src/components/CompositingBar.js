@@ -34,6 +34,7 @@ const CompositingContainer = styled.div`
   justify-content: center;
   flex-direction: column;
   position: absolute;
+  /* bottom: 0%; */
   width: 100%;
   height: 100%;
   text-align: center;

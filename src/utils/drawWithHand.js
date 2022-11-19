@@ -1,6 +1,4 @@
 /* eslint-disable prefer-destructuring */
-const lineWidth = "default";
-
 let newCanvasX = null;
 let newCanvasY = null;
 let pathsry = [];

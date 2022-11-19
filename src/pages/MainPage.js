@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, forwardRef } from "react";
 import WebCam from "react-webcam";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import styled from "styled-components";
 
@@ -11,8 +11,10 @@ import LineBar from "../components/LineBar";
 import ColorBar from "../components/ColorBar";
 import CompositingBar from "../components/CompositingBar";
 import * as fingerPose from "../Fingerpose";
+import { getMainTag } from "../features/getMainDataReducer";
 
 function MainPage() {
+  const dispatch = useDispatch();
   const [neuralNet, setNeuralNet] = useState(null);
   const [ctx, setCtx] = useState(null);
   const [newCtx, setNewCtx] = useState(null);
@@ -30,6 +32,10 @@ function MainPage() {
   const canvasLineThickness = useSelector(
     (state) => state.selectingLineThickness,
   );
+
+  useEffect(() => {
+    dispatch(getMainTag(canvasRef));
+  }, [dispatch]);
 
   const detect = async (network, video) => {
     const hand = await network.estimateHands(video);
@@ -158,6 +164,7 @@ const Canvas = styled.canvas`
   position: absolute;
   width: 100%;
   height: 100%;
+  bottom: 0%;
   text-align: center;
   transform: rotateY(180deg);
   z-index: 9999;

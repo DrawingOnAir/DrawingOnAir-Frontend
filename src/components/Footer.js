@@ -1,11 +1,34 @@
 import React from "react";
+import { useSelector } from "react-redux";
 
 import styled from "styled-components";
+import html2canvas from "html2canvas";
 
 import PAGE_COLORS from "../config/pageColors";
 
 function Footer() {
-  const handleClick = () => {};
+  const mainTagElement = useSelector((state) => state.gettingMainData);
+
+  const onSaveAs = (url, filename) => {
+    const link = document.createElement("a");
+    document.body.appendChild(link);
+    link.href = url;
+    link.download = filename;
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  const handleClick = async () => {
+    try {
+      const canvas = await html2canvas(mainTagElement.current);
+      canvas.getContext("2d", {
+        willReadFrequently: true,
+      });
+      onSaveAs(canvas.toDataURL("image/png"), "image-download.png");
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <FooterContainer>
