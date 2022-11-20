@@ -3,10 +3,15 @@ import { BsQuestionCircle } from "react-icons/bs";
 
 import styled from "styled-components";
 
+import useModal from "../hooks/useModal";
+
 function Header() {
+  const [VideoModal, toggleModal] = useModal();
+
   const handleClick = (event) => {
     event.preventDefault();
-    // TO-Change : openModal();
+
+    toggleModal();
   };
 
   return (
@@ -16,6 +21,16 @@ function Header() {
         <HeaderTitleAir>Air </HeaderTitleAir>
         <HeaderTitleDrawing>Drwaing</HeaderTitleDrawing>
       </HeaderTitle>
+      <VideoModal>
+        <VideoIframe
+          // To-Do : 영상 촬영 후 링크 바꿀 예정입니다.
+          src="https://www.youtube.com/"
+          title="YouTube video player"
+          frameBorder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+        />
+      </VideoModal>
     </HeaderContainer>
   );
 }
@@ -51,6 +66,11 @@ const HeaderTitleAir = styled.span`
 
 const HeaderTitleDrawing = styled.span`
   font-family: "JacquesFrancois";
+`;
+
+const VideoIframe = styled.iframe`
+  width: 100%;
+  height: 100%;
 `;
 
 export default Header;
