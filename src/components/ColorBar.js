@@ -33,7 +33,7 @@ const ColorContainer = styled.div`
   display: flex;
   justify-content: center;
   position: absolute;
-  bottom: 1%;
+  bottom: 1%; //> 적용시에만 나타남
   width: 100%;
   z-index: 9999;
 `;

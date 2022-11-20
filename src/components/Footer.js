@@ -1,5 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import styled from "styled-components";
 import html2canvas from "html2canvas";
@@ -7,6 +8,8 @@ import html2canvas from "html2canvas";
 import PAGE_COLORS from "../config/pageColors";
 
 function Footer() {
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
   const mainTagElement = useSelector((state) => state.gettingMainData);
 
   const onSaveAs = (url, filename) => {
@@ -19,7 +22,7 @@ function Footer() {
     document.body.removeChild(link);
   };
 
-  const handleClick = async () => {
+  const handleClickCapture = async () => {
     try {
       const canvas = await html2canvas(mainTagElement.current);
 
@@ -33,11 +36,34 @@ function Footer() {
     }
   };
 
-  return (
-    <FooterContainer>
-      <FooterButton onClick={handleClick}>Main</FooterButton>
-    </FooterContainer>
-  );
+  const handleClickGoMain = () => {
+    navigate("/main");
+  };
+
+  const handleClickGoHome = () => {
+    navigate("/");
+  };
+
+  switch (pathname) {
+    case "/":
+      return (
+        <FooterContainer>
+          <FooterButton onClick={handleClickGoMain}>Main</FooterButton>
+        </FooterContainer>
+      );
+    case "/main":
+      return (
+        <FooterContainer>
+          <FooterButton onClick={handleClickCapture}>Capture</FooterButton>
+        </FooterContainer>
+      );
+    default:
+      return (
+        <FooterContainer>
+          <FooterButton onClick={handleClickGoHome}>Home</FooterButton>
+        </FooterContainer>
+      );
+  }
 }
 
 const FooterContainer = styled.footer`
