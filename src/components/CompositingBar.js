@@ -34,14 +34,14 @@ const CompositingContainer = styled.div`
   justify-content: center;
   flex-direction: column;
   position: absolute;
-  width: 100%;
+  width: 5%;
   height: 100%;
   text-align: center;
   z-index: 9999;
 `;
 
 const CompositingTypeBox = styled.div`
-  width: 5%;
+  width: 100%;
   height: 10%;
   padding-top: 1.7rem;
   border: 1px solid;

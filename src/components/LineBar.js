@@ -34,9 +34,9 @@ const LineContainer = styled.div`
   display: flex;
   justify-content: center;
   flex-direction: column;
-  align-items: flex-end;
+  right: -3%;
   position: absolute;
-  width: 100%;
+  width: 10%;
   height: 100%;
   text-align: center;
   z-index: 9999;
