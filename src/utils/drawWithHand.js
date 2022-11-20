@@ -29,7 +29,7 @@ const drawWithHand = (
     points.push([originX, originY, canvasColor, canvasLineThickness]);
   }
 
-  if (gesture === "start") {
+  if (gesture === "clear") {
     context.clearRect(0, 0, width, height);
     context.beginPath();
     pathsry = [];
