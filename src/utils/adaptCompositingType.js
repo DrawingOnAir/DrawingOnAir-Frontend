@@ -1,4 +1,5 @@
 /* eslint-disable prefer-destructuring */
+
 const adaptCompositingType = (
   pathsry,
   x,
