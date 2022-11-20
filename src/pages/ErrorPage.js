@@ -8,18 +8,31 @@ import errorImageSrc from "../images/errorEmoji.png";
 function ErrorPage() {
   return (
     <ErrorPageContainer>
-      <ErrorImage />
-      <ErrorPageTitle>404</ErrorPageTitle>
-      <ErrorPageSubTitle>Oops! 존재하지 않는 페이지입니다.</ErrorPageSubTitle>
-      <ErrorPageContent>
-        죄송합니다, 현재 찾으시려는 페이지가 없거나 제거 된 상황으로 예상됩니다.
-        <br />
-        URL 주소를 다시 확인해 주세요.
-      </ErrorPageContent>
+      <ErrorPageBox>
+        <ErrorImage />
+        <ErrorPageTitle>404</ErrorPageTitle>
+        <ErrorPageSubTitle>Oops! 존재하지 않는 페이지입니다.</ErrorPageSubTitle>
+        <ErrorPageContent>
+          죄송합니다, 현재 찾으시려는 페이지가 없거나 제거 된 상황으로
+          예상됩니다.
+          <br />
+          URL 주소를 다시 확인해 주세요.
+        </ErrorPageContent>
+      </ErrorPageBox>
     </ErrorPageContainer>
   );
 }
+
 const ErrorPageContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+`;
+
+const ErrorPageBox = styled.div`
   position: absolute;
   top: 50%;
   left: 50%;
