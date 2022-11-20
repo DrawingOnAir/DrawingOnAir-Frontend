@@ -1,4 +1,8 @@
+import adaptCompositingType from "./adaptCompositingType";
+
 /* eslint-disable prefer-destructuring */
+let originX = null;
+let originY = null;
 let newCanvasX = null;
 let newCanvasY = null;
 let pathsry = [];
@@ -10,8 +14,6 @@ const drawWithHand = (
   gesture,
   width,
   height,
-  originX,
-  originY,
   newContext,
   compositingType,
   canvasColor,
@@ -24,33 +26,28 @@ const drawWithHand = (
   context.lineWidth = canvasLineThickness;
 
   if (points.length === 0) {
-    points.push([originX, originY]);
+    points.push([originX, originY, canvasColor, canvasLineThickness]);
   }
 
   if (gesture === "start") {
+    context.clearRect(0, 0, width, height);
     context.beginPath();
-    context.moveTo(x, y);
+    pathsry = [];
   }
 
   if (gesture === "draw") {
     context.lineTo(x, y);
-    context.stroke();
     points.push([x, y]);
+    context.stroke();
     if (
-      x - 15 < Math.floor(originX) &&
-      Math.floor(originX) < x + 15 &&
-      y - 15 < Math.floor(originY) &&
-      Math.floor(originY) < y + 15
+      x - 5 < Math.floor(originX) &&
+      Math.floor(originX) < x + 5 &&
+      y - 5 < Math.floor(originY) &&
+      Math.floor(originY) < y + 5
     ) {
       context.fillStyle = canvasColor;
       context.fill();
     }
-  }
-
-  if (gesture === "clear") {
-    context.clearRect(0, 0, width, height);
-    context.beginPath();
-    pathsry = [];
   }
 
   if (gesture === "drag") {
@@ -60,180 +57,33 @@ const drawWithHand = (
     newContext.strokeRect(originX, originY, x - originX, y - originY);
   }
 
-  if (gesture !== "drag") {
+  if (gesture !== "draw" && gesture !== "drag") {
     if (newCanvasX && newCanvasY) {
-      context.clearRect(originX, originY, x - originX, y - originY);
-
-      if (pathsry.length !== 0) {
-        pathsry = pathsry.filter((arr, index) => {
-          const maximumX = arr.reduce((a, b) => Math.max(a, b[0]), -Infinity);
-          const minimumX = arr.reduce((a, b) => Math.min(a, b[0]), Infinity);
-          const maximumY = arr.reduce((a, b) => Math.max(a, b[1]), -Infinity);
-          const minimumY = arr.reduce((a, b) => Math.min(a, b[1]), Infinity);
-
-          if (x > originX && y > originY) {
-            if (
-              maximumX >= originX &&
-              minimumX <= x &&
-              maximumY >= originY &&
-              minimumY <= y
-            ) {
-              context.globalCompositeOperation = compositingType;
-
-              if (index === 0) {
-                context.globalCompositeOperation = "source-over";
-              }
-
-              context.beginPath();
-              context.moveTo(arr[0][0], arr[0][1]);
-
-              for (let i = 1; i < arr.length; i += 1) {
-                context.lineTo(arr[i][0], arr[i][1]);
-                context.stroke();
-              }
-              if (
-                arr[arr.length - 1][0] - 15 < Math.floor(arr[0][0]) &&
-                Math.floor(arr[0][0]) < arr[arr.length - 1][0] + 15 &&
-                arr[arr.length - 1][1] - 15 < Math.floor(arr[0][1]) &&
-                Math.floor(arr[0][1]) < arr[arr.length - 1][1] + 15
-              ) {
-                context.fillStyle = canvasColor;
-                context.fill();
-              }
-
-              context.globalCompositeOperation = "source-over";
-
-              return false;
-            }
-            return true;
-          }
-
-          if (x > originX && y < originY) {
-            if (
-              maximumX >= originX &&
-              minimumX <= x &&
-              maximumY >= y &&
-              minimumY <= originY
-            ) {
-              context.globalCompositeOperation = compositingType;
-
-              if (index === 0) {
-                context.globalCompositeOperation = "source-over";
-              }
-
-              context.beginPath();
-              context.moveTo(arr[0][0], arr[0][1]);
-
-              for (let i = 1; i < arr.length; i += 1) {
-                context.lineTo(arr[i][0], arr[i][1]);
-                context.stroke();
-              }
-
-              if (
-                arr[arr.length - 1][0] - 15 < Math.floor(arr[0][0]) &&
-                Math.floor(arr[0][0]) < arr[arr.length - 1][0] + 15 &&
-                arr[arr.length - 1][1] - 15 < Math.floor(arr[0][1]) &&
-                Math.floor(arr[0][1]) < arr[arr.length - 1][1] + 15
-              ) {
-                context.fillStyle = canvasColor;
-                context.fill();
-              }
-
-              context.globalCompositeOperation = "source-over";
-
-              return false;
-            }
-            return true;
-          }
-
-          if (x < originX && y > originY) {
-            if (
-              maximumX >= x &&
-              minimumX <= originX &&
-              maximumY >= originY &&
-              minimumX <= y
-            ) {
-              context.globalCompositeOperation = compositingType;
-
-              if (index === 0) {
-                context.globalCompositeOperation = "source-over";
-              }
-
-              context.beginPath();
-              context.moveTo(arr[0][0], arr[0][1]);
-
-              for (let i = 1; i < arr.length; i += 1) {
-                context.lineTo(arr[i][0], arr[i][1]);
-                context.stroke();
-              }
-
-              if (
-                arr[arr.length - 1][0] - 15 < Math.floor(arr[0][0]) &&
-                Math.floor(arr[0][0]) < arr[arr.length - 1][0] + 15 &&
-                arr[arr.length - 1][1] - 15 < Math.floor(arr[0][1]) &&
-                Math.floor(arr[0][1]) < arr[arr.length - 1][1] + 15
-              ) {
-                context.fillStyle = canvasColor;
-                context.fill();
-              }
-
-              context.globalCompositeOperation = "source-over";
-
-              return false;
-            }
-            return true;
-          }
-
-          if (x < originX && y < originY) {
-            if (
-              maximumX >= x &&
-              minimumX <= originX &&
-              maximumY >= y &&
-              minimumY <= originY
-            ) {
-              context.globalCompositeOperation = compositingType;
-
-              if (index === 0) {
-                context.globalCompositeOperation = "source-over";
-              }
-
-              context.beginPath();
-              context.moveTo(arr[0][0], arr[0][1]);
-
-              for (let i = 1; i < arr.length; i += 1) {
-                context.lineTo(arr[i][0], arr[i][1]);
-                context.stroke();
-              }
-
-              if (
-                arr[arr.length - 1][0] - 15 < Math.floor(arr[0][0]) &&
-                Math.floor(arr[0][0]) < arr[arr.length - 1][0] + 15 &&
-                arr[arr.length - 1][1] - 15 < Math.floor(arr[0][1]) &&
-                Math.floor(arr[0][1]) < arr[arr.length - 1][1] + 15
-              ) {
-                context.fillStyle = canvasColor;
-                context.fill();
-              }
-
-              context.globalCompositeOperation = "source-over";
-
-              return false;
-            }
-            return true;
-          }
-          return true;
-        });
-      }
-
+      context.clearRect(0, 0, width, height);
+      pathsry = adaptCompositingType(
+        pathsry,
+        newCanvasX,
+        newCanvasY,
+        originX,
+        originY,
+        context,
+        compositingType,
+        canvasColor,
+        canvasLineThickness,
+      );
       newCanvasX = null;
       newCanvasY = null;
     }
-
     newContext.clearRect(0, 0, width, height);
+
+    originX = hand[0].keypoints[8].x;
+    originY = hand[0].keypoints[8].y;
+    context.beginPath();
+    context.moveTo(originX, originY);
   }
 
   if (points[0][0] !== originX && points[0][1] !== originY) {
-    if (points.length !== 1) {
+    if (points.length > 3) {
       pathsry.push(points);
     }
 

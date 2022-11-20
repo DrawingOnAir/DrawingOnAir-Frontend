@@ -22,8 +22,6 @@ function MainPage() {
   const [webCam, setWebCam] = useState(null);
   const [canvasWidth, setCanvasWidth] = useState(null);
   const [canvasHeight, setCanvasHeight] = useState(null);
-  const [originX, setOriginX] = useState(null);
-  const [originY, setOriginY] = useState(null);
 
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
@@ -45,7 +43,7 @@ function MainPage() {
     if (hand.length > 0) {
       const GE = new fingerPose.GestureEstimator([
         fingerPose.Gestures.DrawGesture,
-        fingerPose.Gestures.StartGesture,
+        fingerPose.Gestures.NoneGesture,
         fingerPose.Gestures.DragGesture,
         fingerPose.Gestures.ClearGesture,
         fingerPose.Gestures.ExampleGesture,
@@ -60,21 +58,12 @@ function MainPage() {
           Math.max.apply(null, confidence),
         );
 
-        if (gesture.gestures[maxConfidence].name === "start") {
-          const { x, y } = hand[0].keypoints[8];
-
-          setOriginX(x);
-          setOriginY(y);
-        }
-
         drawWithHand(
           hand,
           ctx,
           gesture.gestures[maxConfidence].name,
           canvasWidth,
           canvasHeight,
-          originX,
-          originY,
           newCtx,
           compositingType,
           canvasColor,
