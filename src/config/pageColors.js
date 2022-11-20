@@ -6,6 +6,8 @@ const PAGE_COLORS = {
   ERROR_CONTENT: "#757575",
   BUTTON_BACKGROUND: "#0000",
   BUTTON_FONT_CHANGE_COLOR: "#fff",
+  MODAL_COLOR: "#fff",
+  MODAL_BACKGROUND: "rgba(0, 0, 0, 0.55)",
 };
 
 export default PAGE_COLORS;
