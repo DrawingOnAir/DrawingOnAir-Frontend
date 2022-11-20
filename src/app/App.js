@@ -6,6 +6,7 @@ import styled from "styled-components";
 import GlobalStyle from "./GlobalStyle";
 import HomePage from "../pages/HomePage";
 import MainPage from "../pages/MainPage";
+import ErrorPage from "../pages/ErrorPage";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 
@@ -18,6 +19,7 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/main" element={<MainPage />} />
+          <Route path="*" element={<ErrorPage />} />
         </Routes>
         <Footer />
       </MainSection>
