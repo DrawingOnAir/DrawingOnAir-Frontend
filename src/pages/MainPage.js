@@ -10,6 +10,7 @@ import useInterval from "../hooks/useInterval";
 import LineBar from "../components/LineBar";
 import ColorBar from "../components/ColorBar";
 import CompositingBar from "../components/CompositingBar";
+import LoadingSpinner from "../components/LoadingSpinner";
 import * as fingerPose from "../Fingerpose";
 import { getMainTag } from "../features/getMainDataReducer";
 
@@ -22,6 +23,7 @@ function MainPage() {
   const [webCam, setWebCam] = useState(null);
   const [canvasWidth, setCanvasWidth] = useState(null);
   const [canvasHeight, setCanvasHeight] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
@@ -39,6 +41,9 @@ function MainPage() {
 
   const detect = async (network, video) => {
     const hand = await network.estimateHands(video);
+    if (isLoading) {
+      setIsLoading(false);
+    }
 
     if (hand.length > 0) {
       const GE = new fingerPose.GestureEstimator([
@@ -126,12 +131,18 @@ function MainPage() {
 
   return (
     <MainPageContainer>
-      <WebCamera ref={webcamRef} />
-      <Canvas ref={canvasRef} />
-      <NewCanvas ref={newCanvasRef} />
-      <CompositingBar />
-      <LineBar />
-      <ColorBar />
+      {isLoading ? (
+        <LoadingSpinner />
+      ) : (
+        <>
+          <WebCamera ref={webcamRef} />
+          <Canvas ref={canvasRef} />
+          <NewCanvas ref={newCanvasRef} />
+          <CompositingBar />
+          <LineBar />
+          <ColorBar />
+        </>
+      )}
     </MainPageContainer>
   );
 }
