@@ -8,6 +8,7 @@ const PAGE_COLORS = {
   BUTTON_FONT_CHANGE_COLOR: "#fff",
   MODAL_COLOR: "#fff",
   MODAL_BACKGROUND: "rgba(0, 0, 0, 0.55)",
+  LOADING_COLOR: "#f5df4d",
 };
 
 export default PAGE_COLORS;
