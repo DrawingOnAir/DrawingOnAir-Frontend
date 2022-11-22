@@ -18,15 +18,15 @@ import HANDS_ID from "../config/handsId";
 function MainPage() {
   const dispatch = useDispatch();
 
+  const [contextArray, setcontextArray] = useState([]);
   const [neuralNet, setNeuralNet] = useState(null);
   const [webCam, setWebCam] = useState(null);
-  const [contextArray, setcontextArray] = useState([]);
   const [canvasWidth, setCanvasWidth] = useState(null);
   const [canvasHeight, setCanvasHeight] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  const webcamRef = useRef(null);
   const canvasRefs = useRef([]);
+  const webcamRef = useRef(null);
 
   const compositingType = useSelector((state) => state.compositingData);
   const canvasColor = useSelector((state) => state.selectingColor);
