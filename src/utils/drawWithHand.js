@@ -1,7 +1,6 @@
 import adaptCompositingType from "./adaptCompositingType";
 import drawData from "./drawData";
 
-/* eslint-disable prefer-destructuring */
 const originX = {};
 const originY = {};
 const draggingAreaX = {};
