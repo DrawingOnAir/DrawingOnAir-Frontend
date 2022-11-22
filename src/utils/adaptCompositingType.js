@@ -1,4 +1,3 @@
-/* eslint-disable prefer-destructuring */
 import checkOwnCompositingType from "./checkOwnCompositingType";
 import drawData from "./drawData";
 
