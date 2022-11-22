@@ -112,9 +112,6 @@ function MainPage() {
       webcamRef.current.video.width = videoWidth;
       webcamRef.current.video.height = videoHeight;
 
-      webcamRef.current.video.width = videoWidth;
-      webcamRef.current.video.height = videoHeight;
-
       const canvasArray = canvasRefs.current.map((canvasRef) => {
         canvasRef.width = videoWidth;
         canvasRef.height = videoHeight;
