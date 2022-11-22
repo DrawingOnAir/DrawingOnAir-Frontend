@@ -28,6 +28,7 @@ const drawWithHand = (
 ) => {
   const { keypoints } = hand;
   const { x, y } = keypoints[8];
+
   drawingContext.strokeStyle = canvasColor;
   drawingContext.lineWidth = canvasLineThickness;
 
@@ -42,14 +43,18 @@ const drawWithHand = (
 
   switch (gesture) {
     case "clear":
+      pathsry = [];
+
       originContext.clearRect(0, 0, canvasWidth, canvasHeight);
       originContext.beginPath();
-      pathsry = [];
+
       break;
     case "draw":
-      drawingContext.lineTo(x, y);
       points[handType].push([x, y]);
+
+      drawingContext.lineTo(x, y);
       drawingContext.stroke();
+
       if (
         x - 5 < Math.floor(originX) &&
         Math.floor(originX) < x + 5 &&
@@ -59,10 +64,12 @@ const drawWithHand = (
         drawingContext.fillStyle = canvasColor;
         drawingContext.fill();
       }
+
       break;
     case "drag":
       draggingAreaX[handType] = x;
       draggingAreaY[handType] = y;
+
       draggingContext.clearRect(0, 0, canvasWidth, canvasHeight);
       draggingContext.strokeRect(
         originX[handType],
@@ -70,10 +77,12 @@ const drawWithHand = (
         x - originX[handType],
         y - originY[handType],
       );
+
       break;
     default:
       if (draggingAreaX[handType] && draggingAreaY[handType]) {
         originContext.clearRect(0, 0, canvasWidth, canvasHeight);
+
         pathsry = adaptCompositingType(
           pathsry,
           draggingAreaX[handType],
@@ -85,19 +94,21 @@ const drawWithHand = (
           canvasColor,
           canvasLineThickness,
         );
+
         draggingAreaX[handType] = null;
         draggingAreaY[handType] = null;
       }
+
       draggingContext.clearRect(0, 0, canvasWidth, canvasHeight);
+
       pathsry = pathsry.map((arr) => {
         drawData(originContext, arr);
-
         return arr;
       });
-      //
 
       originX[handType] = x;
       originY[handType] = y;
+
       drawingContext.beginPath();
       drawingContext.moveTo(originX[handType], originY[handType]);
   }
