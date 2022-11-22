@@ -20,7 +20,7 @@ function MainPage() {
 
   const [neuralNet, setNeuralNet] = useState(null);
   const [webCam, setWebCam] = useState(null);
-  const [ctxArray, setCtxArray] = useState([]);
+  const [contextArray, setcontextArray] = useState([]);
   const [canvasWidth, setCanvasWidth] = useState(null);
   const [canvasHeight, setCanvasHeight] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -66,9 +66,9 @@ function MainPage() {
           if (hand.handedness === "Right") {
             drawWithHand(
               hand,
-              ctxArray[0],
-              ctxArray[1],
-              ctxArray[2],
+              contextArray[0],
+              contextArray[1],
+              contextArray[2],
               gesture.gestures[maxConfidence].name,
               canvasWidth,
               canvasHeight,
@@ -82,9 +82,9 @@ function MainPage() {
           if (hand.handedness === "Left") {
             drawWithHand(
               hand,
-              ctxArray[0],
-              ctxArray[3],
-              ctxArray[4],
+              contextArray[0],
+              contextArray[3],
+              contextArray[4],
               gesture.gestures[maxConfidence].name,
               canvasWidth,
               canvasHeight,
@@ -122,7 +122,7 @@ function MainPage() {
       setCanvasWidth(videoWidth);
       setCanvasHeight(videoHeight);
       setWebCam(video);
-      setCtxArray(canvasArray);
+      setcontextArray(canvasArray);
     }
   };
 
@@ -138,7 +138,7 @@ function MainPage() {
   }, []);
 
   useInterval(() => {
-    if (ctxArray.length === 0) {
+    if (contextArray.length === 0) {
       setCanvasAndWebCam();
     }
 

@@ -6,11 +6,12 @@ const originX = {};
 const originY = {};
 const draggingAreaX = {};
 const draggingAreaY = {};
-let pathsry = [];
 const points = {
   Right: [],
   Left: [],
 };
+
+let pathsry = [];
 
 const drawWithHand = (
   hand,
