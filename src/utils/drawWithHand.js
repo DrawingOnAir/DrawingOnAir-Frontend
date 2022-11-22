@@ -1,93 +1,126 @@
 import adaptCompositingType from "./adaptCompositingType";
+import drawData from "./drawData";
 
-/* eslint-disable prefer-destructuring */
-let originX = null;
-let originY = null;
-let newCanvasX = null;
-let newCanvasY = null;
+const originX = {};
+const originY = {};
+const draggingAreaX = {};
+const draggingAreaY = {};
+const points = {
+  Right: [],
+  Left: [],
+};
+
 let pathsry = [];
-let points = [];
 
 const drawWithHand = (
   hand,
-  context,
+  originContext,
+  drawingContext,
+  draggingContext,
   gesture,
-  width,
-  height,
-  newContext,
+  canvasWidth,
+  canvasHeight,
   compositingType,
   canvasColor,
   canvasLineThickness,
+  handType,
 ) => {
-  const { keypoints } = hand[0];
+  const { keypoints } = hand;
   const { x, y } = keypoints[8];
 
-  context.strokeStyle = canvasColor;
-  context.lineWidth = canvasLineThickness;
+  drawingContext.strokeStyle = canvasColor;
+  drawingContext.lineWidth = canvasLineThickness;
 
-  if (points.length === 0) {
-    points.push([originX, originY, canvasColor, canvasLineThickness]);
+  if (points[handType].length === 0) {
+    points[handType].push([
+      originX[handType],
+      originY[handType],
+      canvasColor,
+      canvasLineThickness,
+    ]);
   }
 
-  if (gesture === "clear") {
-    context.clearRect(0, 0, width, height);
-    context.beginPath();
-    pathsry = [];
-  }
+  switch (gesture) {
+    case "clear":
+      pathsry = [];
 
-  if (gesture === "draw") {
-    context.lineTo(x, y);
-    points.push([x, y]);
-    context.stroke();
-    if (
-      x - 5 < Math.floor(originX) &&
-      Math.floor(originX) < x + 5 &&
-      y - 5 < Math.floor(originY) &&
-      Math.floor(originY) < y + 5
-    ) {
-      context.fillStyle = canvasColor;
-      context.fill();
-    }
-  }
+      originContext.clearRect(0, 0, canvasWidth, canvasHeight);
+      originContext.beginPath();
 
-  if (gesture === "drag") {
-    newCanvasX = x;
-    newCanvasY = y;
-    newContext.clearRect(0, 0, width, height);
-    newContext.strokeRect(originX, originY, x - originX, y - originY);
-  }
+      break;
+    case "draw":
+      points[handType].push([x, y]);
 
-  if (gesture !== "draw" && gesture !== "drag") {
-    if (newCanvasX && newCanvasY) {
-      context.clearRect(0, 0, width, height);
-      pathsry = adaptCompositingType(
-        pathsry,
-        newCanvasX,
-        newCanvasY,
-        originX,
-        originY,
-        context,
-        compositingType,
-        canvasColor,
-        canvasLineThickness,
+      drawingContext.lineTo(x, y);
+      drawingContext.stroke();
+
+      if (
+        x - 5 < Math.floor(originX) &&
+        Math.floor(originX) < x + 5 &&
+        y - 5 < Math.floor(originY) &&
+        Math.floor(originY) < y + 5
+      ) {
+        drawingContext.fillStyle = canvasColor;
+        drawingContext.fill();
+      }
+
+      break;
+    case "drag":
+      draggingAreaX[handType] = x;
+      draggingAreaY[handType] = y;
+
+      draggingContext.clearRect(0, 0, canvasWidth, canvasHeight);
+      draggingContext.strokeRect(
+        originX[handType],
+        originY[handType],
+        x - originX[handType],
+        y - originY[handType],
       );
-      newCanvasX = null;
-      newCanvasY = null;
-    }
-    newContext.clearRect(0, 0, width, height);
 
-    originX = hand[0].keypoints[8].x;
-    originY = hand[0].keypoints[8].y;
-    context.beginPath();
-    context.moveTo(originX, originY);
+      break;
+    default:
+      if (draggingAreaX[handType] && draggingAreaY[handType]) {
+        originContext.clearRect(0, 0, canvasWidth, canvasHeight);
+
+        pathsry = adaptCompositingType(
+          pathsry,
+          draggingAreaX[handType],
+          draggingAreaY[handType],
+          originX[handType],
+          originY[handType],
+          originContext,
+          compositingType,
+          canvasColor,
+          canvasLineThickness,
+        );
+
+        draggingAreaX[handType] = null;
+        draggingAreaY[handType] = null;
+      }
+
+      draggingContext.clearRect(0, 0, canvasWidth, canvasHeight);
+
+      pathsry = pathsry.map((arr) => {
+        drawData(originContext, arr);
+        return arr;
+      });
+
+      originX[handType] = x;
+      originY[handType] = y;
+
+      drawingContext.beginPath();
+      drawingContext.moveTo(originX[handType], originY[handType]);
   }
 
-  if (points[0][0] !== originX && points[0][1] !== originY) {
-    if (points.length > 3) {
-      pathsry.push(points);
+  if (
+    points[handType][0][0] !== originX[handType] &&
+    points[handType][0][1] !== originY[handType]
+  ) {
+    if (points[handType].length > 3) {
+      pathsry.push(points[handType]);
     }
 
-    points = [];
+    points[handType] = [];
   }
 };
 

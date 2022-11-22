@@ -7,7 +7,7 @@ const setHandsDetector = async () => {
   const detectorConfig = {
     runtime: "tfjs",
     modelType: "full",
-    maxHands: 10,
+    maxHands: 2,
   };
   const handsDetector = await handPoseDetection.createDetector(
     hands,
