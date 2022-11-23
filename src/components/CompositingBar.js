@@ -17,12 +17,13 @@ function CompositingBar() {
     <CompositingContainer>
       {COMPOSITING_TYPE.map((type) => {
         return (
-          <CompositingTypeBox
-            key={type}
-            onClick={(event) => handleClick(event, type)}
+          <CompositingTypeButton
+            key={type.name}
+            title={type.explanation}
+            onClick={(event) => handleClick(event, type.name)}
           >
-            {type}
-          </CompositingTypeBox>
+            {type.name}
+          </CompositingTypeButton>
         );
       })}
     </CompositingContainer>
@@ -36,18 +37,31 @@ const CompositingContainer = styled.div`
   position: absolute;
   width: 5%;
   height: 100%;
+  margin-left: 0.3rem;
   text-align: center;
   z-index: 9999;
 `;
 
-const CompositingTypeBox = styled.div`
+const CompositingTypeButton = styled.button`
   width: 100%;
   height: 10%;
-  padding-top: 1.7rem;
+  margin: 1rem 0 1rem 0;
   border: 1px solid;
+  border-radius: 10%;
   text-align: center;
   font-size: 0.9rem;
+  background-color: rgba(255, 255, 255, 0);
   cursor: pointer;
+
+  &:hover {
+    background-color: rgba(213, 217, 217, 0.5);
+  }
+
+  &:focus {
+    border-color: rgba(0, 130, 150, 1);
+    box-shadow: rgba(213, 217, 217, 0.5) 0 2px 5px 0;
+    outline: 0;
+  }
 `;
 
 export default CompositingBar;

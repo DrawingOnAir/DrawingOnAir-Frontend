@@ -4,7 +4,7 @@ import GestureDescription from "../GestureDescription";
 // 제스쳐: 검지, 중지만 위로
 const dragDescription = new GestureDescription("drag");
 
-// 엄지:
+// 엄지
 dragDescription.addDirection(Finger.Thumb, FingerDirection.VerticalUp, 1.0);
 dragDescription.addDirection(Finger.Thumb, FingerDirection.DiagonalUpLeft, 1.0);
 dragDescription.addDirection(
@@ -13,7 +13,7 @@ dragDescription.addDirection(
   1.0,
 );
 
-// 검지, 중지:
+// 검지, 중지
 [Finger.Index, Finger.Middle].forEach((finger) => {
   dragDescription.addCurl(finger, FingerCurl.NoCurl, 1.0);
   dragDescription.addDirection(finger, FingerDirection.VerticalUp, 1.0);

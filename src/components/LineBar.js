@@ -19,7 +19,7 @@ function LineBar() {
     <LineContainer>
       {LINE_THICKNESSES.map((thickness) => {
         return (
-          <LineThickness
+          <LineThicknessButton
             key={thickness}
             thickness={thickness}
             onClick={(event) => handleClick(event, thickness)}
@@ -42,7 +42,7 @@ const LineContainer = styled.div`
   z-index: 9999;
 `;
 
-const LineThickness = styled.div`
+const LineThicknessButton = styled.button`
   width: ${(props) => `${props.thickness}px`};
   height: 3rem;
   margin: 1rem 3rem;

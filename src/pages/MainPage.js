@@ -4,14 +4,13 @@ import { useDispatch, useSelector } from "react-redux";
 
 import styled from "styled-components";
 
-import setHandsDetector from "../utils/setHandsDetector";
-import drawWithHand from "../utils/drawWithHand";
+import setHandsDetector from "../utils/TensorflowUtils/setHandsDetector";
+import detectHands from "../utils/TensorflowUtils/detectHands";
 import useInterval from "../hooks/useInterval";
 import LineBar from "../components/LineBar";
 import ColorBar from "../components/ColorBar";
 import CompositingBar from "../components/CompositingBar";
 import LoadingSpinner from "../components/LoadingSpinner";
-import * as fingerPose from "../Fingerpose";
 import { getMainTag } from "../features/getMainDataReducer";
 import HANDS_ID from "../config/handsId";
 
@@ -37,67 +36,6 @@ function MainPage() {
   useEffect(() => {
     dispatch(getMainTag(canvasRefs.current[0]));
   }, [dispatch]);
-
-  const detect = async (network, video) => {
-    const hands = await network.estimateHands(video);
-    if (isLoading) {
-      setIsLoading(false);
-    }
-
-    if (hands.length > 0) {
-      const GE = new fingerPose.GestureEstimator([
-        fingerPose.Gestures.DrawGesture,
-        fingerPose.Gestures.NoneGesture,
-        fingerPose.Gestures.DragGesture,
-        fingerPose.Gestures.ClearGesture,
-        fingerPose.Gestures.ExampleGesture,
-      ]);
-      hands.forEach((hand) => {
-        const gesture = GE.estimate(hand, 8);
-
-        if (gesture.gestures !== undefined && gesture.gestures.length > 0) {
-          const confidence = gesture.gestures.map(
-            (prediction) => prediction.score,
-          );
-          const maxConfidence = confidence.indexOf(
-            Math.max.apply(null, confidence),
-          );
-
-          if (hand.handedness === "Right") {
-            drawWithHand(
-              hand,
-              contextArray[0],
-              contextArray[1],
-              contextArray[2],
-              gesture.gestures[maxConfidence].name,
-              canvasWidth,
-              canvasHeight,
-              compositingType,
-              canvasColor,
-              canvasLineThickness,
-              hand.handedness,
-            );
-          }
-
-          if (hand.handedness === "Left") {
-            drawWithHand(
-              hand,
-              contextArray[0],
-              contextArray[3],
-              contextArray[4],
-              gesture.gestures[maxConfidence].name,
-              canvasWidth,
-              canvasHeight,
-              compositingType,
-              canvasColor,
-              canvasLineThickness,
-              hand.handedness,
-            );
-          }
-        }
-      });
-    }
-  };
 
   const setCanvasAndWebCam = () => {
     if (
@@ -128,10 +66,15 @@ function MainPage() {
 
   useEffect(() => {
     const runHandPoseDetect = async () => {
-      const network = await setHandsDetector();
-      console.log("HandPose model Loaded"); // To-Do : 삭제 예정, 추후 loaddingSpinner의 위치
+      try {
+        const network = await setHandsDetector();
 
-      setNeuralNet(network);
+        setNeuralNet(network);
+      } catch (error) {
+        console.error(
+          "Hand-pose-detection 모델이 정상적으로 적용이 되지 않았습니다.",
+        );
+      }
     };
 
     runHandPoseDetect();
@@ -143,14 +86,29 @@ function MainPage() {
     }
 
     if (neuralNet) {
-      detect(neuralNet, webCam);
+      detectHands(
+        neuralNet,
+        webCam,
+        setIsLoading,
+        contextArray,
+        canvasWidth,
+        canvasHeight,
+        compositingType,
+        canvasColor,
+        canvasLineThickness,
+      );
     }
   }, 100);
 
   return (
     <MainPageContainer>
       {isLoading ? (
-        <LoadingSpinner />
+        <>
+          <LoadingSpinner />
+          <CheckingContainer>
+            <WebCamera ref={webcamRef} />
+          </CheckingContainer>
+        </>
       ) : (
         <>
           <WebCamera ref={webcamRef} />
@@ -180,9 +138,15 @@ const MainPageContainer = styled.div`
   height: 100%;
 `;
 
+const CheckingContainer = styled.div`
+  position: relative;
+  width: 0%;
+  height: 0%;
+`;
+
 const WebCamera = styled(WebCam)`
   position: absolute;
-  width: 100%;
+  width: 100vw;
   height: 100%;
   text-align: center;
   transform: rotateY(180deg);
@@ -191,9 +155,8 @@ const WebCamera = styled(WebCam)`
 
 const Canvas = styled.canvas`
   position: absolute;
-  width: 100%;
+  width: 100vw;
   height: 100%;
-  bottom: 0%;
   text-align: center;
   transform: rotateY(180deg);
   z-index: 9999;

@@ -1,8 +1,8 @@
 import React from "react";
-import { BsWind } from "react-icons/bs";
 
 import styled from "styled-components";
 
+import AirDrawImgaeSrc from "../images/airDrawImgae.png";
 import "../fonts/font.css";
 
 function HomePage() {
@@ -12,7 +12,7 @@ function HomePage() {
         <HomePageTitleAir>Air </HomePageTitleAir>
         <HomePageTitleDrawing>Drawing</HomePageTitleDrawing>
       </HomePageTitle>
-      <HomePageIcon />
+      <HomePageImage src={AirDrawImgaeSrc} />
     </HomePageContainer>
   );
 }
@@ -41,9 +41,20 @@ const HomePageTitleDrawing = styled.span`
   font-family: "JacquesFrancois";
 `;
 
-const HomePageIcon = styled(BsWind)`
-  font-size: 5rem;
-  transform: rotate(180deg);
+const HomePageImage = styled.img`
+  width: 8vw;
+  height: 8vw;
+  font-size: 1rem;
+  animation: upAndDownAnimation 1s linear 0s infinite alternate;
+
+  @keyframes upAndDownAnimation {
+    from {
+      transform: translateY(0rem);
+    }
+    to {
+      transform: translateY(-2rem);
+    }
+  }
 `;
 
 export default HomePage;

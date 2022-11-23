@@ -1,5 +1,5 @@
 import React from "react";
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 
 import PAGE_COLORS from "../config/pageColors";
 
@@ -14,16 +14,6 @@ function LoadingSpinner() {
   );
 }
 
-const circleAnimation = keyframes`
-  0%
-  {
-    transform:rotate(45deg);
-  }
-  100%
-  {
-    transform:rotate(405deg);
-  }
-`;
 const LoadingSpinnerContainer = styled.div`
   width: 100%;
   height: 100%;
@@ -57,7 +47,16 @@ const LoaddingSpinnerSpan = styled.span`
   height: 0.25rem;
   background: transparent;
   transform-origin: left;
-  animation: ${circleAnimation} 4.5s linear infinite;
+  animation: circleAnimation 4.5s linear infinite;
+
+  @keyframes circleAnimation {
+    0% {
+      transform: rotate(45deg);
+    }
+    100% {
+      transform: rotate(405deg);
+    }
+  }
 
   &:before {
     content: "";

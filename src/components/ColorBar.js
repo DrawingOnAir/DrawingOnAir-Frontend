@@ -18,7 +18,7 @@ function ColorBar() {
     <ColorContainer>
       {CIRCLE_COLORS.map((color) => {
         return (
-          <ColorCircle
+          <ColorCircleButton
             key={color}
             color={color}
             onClick={(event) => handleClick(event, color)}
@@ -38,10 +38,11 @@ const ColorContainer = styled.div`
   z-index: 9999;
 `;
 
-const ColorCircle = styled.div`
+const ColorCircleButton = styled.button`
   width: 1.5rem;
   height: 1.5rem;
   margin: 0 0.5rem 0 0.5rem;
+  border: 1px solid ${(props) => props.color};
   border-radius: 50%;
   background-color: ${(props) => props.color};
   cursor: pointer;
