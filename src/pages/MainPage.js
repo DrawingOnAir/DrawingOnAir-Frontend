@@ -26,6 +26,7 @@ function MainPage() {
 
   const canvasRefs = useRef([]);
   const webcamRef = useRef(null);
+  const mainRef = useRef(null);
 
   const compositingType = useSelector((state) => state.compositingData);
   const canvasColor = useSelector((state) => state.selectingColor);
@@ -34,7 +35,7 @@ function MainPage() {
   );
 
   useEffect(() => {
-    dispatch(getMainTag(canvasRefs.current[0]));
+    dispatch(getMainTag(mainRef));
   }, [dispatch]);
 
   const setCanvasAndWebCam = () => {
@@ -101,7 +102,7 @@ function MainPage() {
   }, 100);
 
   return (
-    <MainPageContainer>
+    <MainPageContainer ref={mainRef}>
       {isLoading ? (
         <>
           <LoadingSpinner />
@@ -148,6 +149,7 @@ const WebCamera = styled(WebCam)`
   position: absolute;
   width: 100vw;
   height: 100%;
+  left: 0%;
   text-align: center;
   transform: rotateY(180deg);
   z-index: 9999;
@@ -157,6 +159,7 @@ const Canvas = styled.canvas`
   position: absolute;
   width: 100vw;
   height: 100%;
+  left: 0%;
   text-align: center;
   transform: rotateY(180deg);
   z-index: 9999;
