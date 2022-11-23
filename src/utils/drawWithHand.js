@@ -99,6 +99,7 @@ const drawWithHand = (
       }
 
       draggingContext.clearRect(0, 0, canvasWidth, canvasHeight);
+      drawingContext.clearRect(0, 0, canvasWidth, canvasHeight);
 
       pathsry = pathsry.map((arr) => {
         drawData(originContext, arr);

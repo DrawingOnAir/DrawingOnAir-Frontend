@@ -39,63 +39,67 @@ function MainPage() {
   }, [dispatch]);
 
   const detect = async (network, video) => {
-    const hands = await network.estimateHands(video);
-    if (isLoading) {
-      setIsLoading(false);
-    }
+    try {
+      const hands = await network.estimateHands(video);
+      if (hands.length !== 0) {
+        setIsLoading(false);
+      }
 
-    if (hands.length > 0) {
-      const GE = new fingerPose.GestureEstimator([
-        fingerPose.Gestures.DrawGesture,
-        fingerPose.Gestures.NoneGesture,
-        fingerPose.Gestures.DragGesture,
-        fingerPose.Gestures.ClearGesture,
-        fingerPose.Gestures.ExampleGesture,
-      ]);
-      hands.forEach((hand) => {
-        const gesture = GE.estimate(hand, 8);
+      if (hands.length > 0) {
+        const GE = new fingerPose.GestureEstimator([
+          fingerPose.Gestures.DrawGesture,
+          fingerPose.Gestures.NoneGesture,
+          fingerPose.Gestures.DragGesture,
+          fingerPose.Gestures.ClearGesture,
+          fingerPose.Gestures.ExampleGesture,
+        ]);
+        hands.forEach((hand) => {
+          const gesture = GE.estimate(hand, 8);
 
-        if (gesture.gestures !== undefined && gesture.gestures.length > 0) {
-          const confidence = gesture.gestures.map(
-            (prediction) => prediction.score,
-          );
-          const maxConfidence = confidence.indexOf(
-            Math.max.apply(null, confidence),
-          );
-
-          if (hand.handedness === "Right") {
-            drawWithHand(
-              hand,
-              contextArray[0],
-              contextArray[1],
-              contextArray[2],
-              gesture.gestures[maxConfidence].name,
-              canvasWidth,
-              canvasHeight,
-              compositingType,
-              canvasColor,
-              canvasLineThickness,
-              hand.handedness,
+          if (gesture.gestures !== undefined && gesture.gestures.length > 0) {
+            const confidence = gesture.gestures.map(
+              (prediction) => prediction.score,
             );
-          }
-
-          if (hand.handedness === "Left") {
-            drawWithHand(
-              hand,
-              contextArray[0],
-              contextArray[3],
-              contextArray[4],
-              gesture.gestures[maxConfidence].name,
-              canvasWidth,
-              canvasHeight,
-              compositingType,
-              canvasColor,
-              canvasLineThickness,
-              hand.handedness,
+            const maxConfidence = confidence.indexOf(
+              Math.max.apply(null, confidence),
             );
+
+            if (hand.handedness === "Right") {
+              drawWithHand(
+                hand,
+                contextArray[0],
+                contextArray[1],
+                contextArray[2],
+                gesture.gestures[maxConfidence].name,
+                canvasWidth,
+                canvasHeight,
+                compositingType,
+                canvasColor,
+                canvasLineThickness,
+                hand.handedness,
+              );
+            }
+
+            if (hand.handedness === "Left") {
+              drawWithHand(
+                hand,
+                contextArray[0],
+                contextArray[3],
+                contextArray[4],
+                gesture.gestures[maxConfidence].name,
+                canvasWidth,
+                canvasHeight,
+                compositingType,
+                canvasColor,
+                canvasLineThickness,
+                hand.handedness,
+              );
+            }
           }
-        }
-      });
+        });
+      }
+    } catch (error) {
+      console.error("손 동작 감지에 실패하였습니다.");
     }
   };
 
@@ -128,10 +132,15 @@ function MainPage() {
 
   useEffect(() => {
     const runHandPoseDetect = async () => {
-      const network = await setHandsDetector();
-      console.log("HandPose model Loaded"); // To-Do : 삭제 예정, 추후 loaddingSpinner의 위치
+      try {
+        const network = await setHandsDetector();
 
-      setNeuralNet(network);
+        setNeuralNet(network);
+      } catch (error) {
+        console.error(
+          "Hand-pose-detection 모델이 정상적으로 적용이 되지 않았습니다.",
+        );
+      }
     };
 
     runHandPoseDetect();
@@ -150,7 +159,12 @@ function MainPage() {
   return (
     <MainPageContainer>
       {isLoading ? (
-        <LoadingSpinner />
+        <>
+          <LoadingSpinner />
+          <FakeContainer>
+            <WebCamera ref={webcamRef} />
+          </FakeContainer>
+        </>
       ) : (
         <>
           <WebCamera ref={webcamRef} />
@@ -180,9 +194,15 @@ const MainPageContainer = styled.div`
   height: 100%;
 `;
 
+const FakeContainer = styled.div`
+  position: relative;
+  width: 0%;
+  height: 0%;
+`;
+
 const WebCamera = styled(WebCam)`
   position: absolute;
-  width: 100%;
+  width: 100vw;
   height: 100%;
   text-align: center;
   transform: rotateY(180deg);
@@ -191,9 +211,8 @@ const WebCamera = styled(WebCam)`
 
 const Canvas = styled.canvas`
   position: absolute;
-  width: 100%;
+  width: 100vw;
   height: 100%;
-  bottom: 0%;
   text-align: center;
   transform: rotateY(180deg);
   z-index: 9999;

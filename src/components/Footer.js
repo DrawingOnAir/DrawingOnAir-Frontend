@@ -32,7 +32,7 @@ function Footer() {
 
       onSaveAs(canvas.toDataURL("image/png"), "image-download.png");
     } catch (error) {
-      console.error(error);
+      console.error("캡쳐 이미지를 가져오는데에 실패하였습니다.");
     }
   };
 
