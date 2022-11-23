@@ -4,14 +4,13 @@ import { useDispatch, useSelector } from "react-redux";
 
 import styled from "styled-components";
 
-import setHandsDetector from "../utils/setHandsDetector";
-import drawWithHand from "../utils/drawWithHand";
+import setHandsDetector from "../utils/TensorflowUtils/setHandsDetector";
+import detectHands from "../utils/TensorflowUtils/detectHands";
 import useInterval from "../hooks/useInterval";
 import LineBar from "../components/LineBar";
 import ColorBar from "../components/ColorBar";
 import CompositingBar from "../components/CompositingBar";
 import LoadingSpinner from "../components/LoadingSpinner";
-import * as fingerPose from "../Fingerpose";
 import { getMainTag } from "../features/getMainDataReducer";
 import HANDS_ID from "../config/handsId";
 
@@ -37,71 +36,6 @@ function MainPage() {
   useEffect(() => {
     dispatch(getMainTag(canvasRefs.current[0]));
   }, [dispatch]);
-
-  const detect = async (network, video) => {
-    try {
-      const hands = await network.estimateHands(video);
-      if (hands.length !== 0) {
-        setIsLoading(false);
-      }
-
-      if (hands.length > 0) {
-        const GE = new fingerPose.GestureEstimator([
-          fingerPose.Gestures.DrawGesture,
-          fingerPose.Gestures.NoneGesture,
-          fingerPose.Gestures.DragGesture,
-          fingerPose.Gestures.ClearGesture,
-          fingerPose.Gestures.ExampleGesture,
-        ]);
-        hands.forEach((hand) => {
-          const gesture = GE.estimate(hand, 8);
-
-          if (gesture.gestures !== undefined && gesture.gestures.length > 0) {
-            const confidence = gesture.gestures.map(
-              (prediction) => prediction.score,
-            );
-            const maxConfidence = confidence.indexOf(
-              Math.max.apply(null, confidence),
-            );
-
-            if (hand.handedness === "Right") {
-              drawWithHand(
-                hand,
-                contextArray[0],
-                contextArray[1],
-                contextArray[2],
-                gesture.gestures[maxConfidence].name,
-                canvasWidth,
-                canvasHeight,
-                compositingType,
-                canvasColor,
-                canvasLineThickness,
-                hand.handedness,
-              );
-            }
-
-            if (hand.handedness === "Left") {
-              drawWithHand(
-                hand,
-                contextArray[0],
-                contextArray[3],
-                contextArray[4],
-                gesture.gestures[maxConfidence].name,
-                canvasWidth,
-                canvasHeight,
-                compositingType,
-                canvasColor,
-                canvasLineThickness,
-                hand.handedness,
-              );
-            }
-          }
-        });
-      }
-    } catch (error) {
-      console.error("손 동작 감지에 실패하였습니다.");
-    }
-  };
 
   const setCanvasAndWebCam = () => {
     if (
@@ -152,7 +86,17 @@ function MainPage() {
     }
 
     if (neuralNet) {
-      detect(neuralNet, webCam);
+      detectHands(
+        neuralNet,
+        webCam,
+        setIsLoading,
+        contextArray,
+        canvasWidth,
+        canvasHeight,
+        compositingType,
+        canvasColor,
+        canvasLineThickness,
+      );
     }
   }, 100);
 
@@ -161,9 +105,9 @@ function MainPage() {
       {isLoading ? (
         <>
           <LoadingSpinner />
-          <FakeContainer>
+          <CheckingContainer>
             <WebCamera ref={webcamRef} />
-          </FakeContainer>
+          </CheckingContainer>
         </>
       ) : (
         <>
@@ -194,7 +138,7 @@ const MainPageContainer = styled.div`
   height: 100%;
 `;
 
-const FakeContainer = styled.div`
+const CheckingContainer = styled.div`
   position: relative;
   width: 0%;
   height: 0%;

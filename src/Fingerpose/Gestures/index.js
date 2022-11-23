@@ -2,14 +2,14 @@ import DragGesture from "./Drag";
 import ClearGesture from "./Clear";
 import DrawGesture from "./Draw";
 import NoneGesture from "./None";
-import ExampleGesture from "./Example";
+import NoneTwoGesture from "./NoneTwo";
 
 const Gestures = {
   DragGesture,
   NoneGesture,
   ClearGesture,
   DrawGesture,
-  ExampleGesture,
+  NoneTwoGesture,
 };
 
 export default Gestures;
