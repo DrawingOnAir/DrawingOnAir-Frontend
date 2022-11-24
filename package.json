@@ -7,6 +7,7 @@
       "url": "https://github.com/Y-SeonJong"
     }
   ],
+  "homepage": "http://www.airdrawing.club/",
   "private": true,
   "dependencies": {
     "@mediapipe/hands": "^0.4.1646424915",
