@@ -12,7 +12,7 @@ function HomePage() {
         <HomePageTitleAir>Air </HomePageTitleAir>
         <HomePageTitleDrawing>Drawing</HomePageTitleDrawing>
       </HomePageTitle>
-      <HomePageImage src={AirDrawImgaeSrc} />
+      <HomePageImage src={AirDrawImgaeSrc} alt="logo-imgae" />
     </HomePageContainer>
   );
 }

@@ -1,4 +1,4 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import logger from "redux-logger";
 
 import compositeDataReducer from "../features/compositeDataReducer";
@@ -19,3 +19,12 @@ const store = configureStore({
 });
 
 export default store;
+
+const rootReducerForTestingLibrary = combineReducers({ ...reducer });
+
+export function TestSetupStore(preloadedState) {
+  return configureStore({
+    reducer: rootReducerForTestingLibrary,
+    preloadedState,
+  });
+}
