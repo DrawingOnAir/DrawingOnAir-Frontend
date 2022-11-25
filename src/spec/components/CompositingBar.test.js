@@ -2,7 +2,6 @@ import React from "react";
 import { screen, fireEvent } from "@testing-library/react";
 
 import store from "../../app/store";
-
 import renderWithProviders from "../utils/test-utils";
 import CompositingBar from "../../components/CompositingBar";
 
