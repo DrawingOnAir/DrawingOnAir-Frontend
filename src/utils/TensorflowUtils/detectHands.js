@@ -72,7 +72,7 @@ const detectHands = async (
       });
     }
   } catch (error) {
-    console.error("손 동작 감지에 실패하였습니다.");
+    throw new Error("손 동작 감지에 실패하였습니다.");
   }
 };
 

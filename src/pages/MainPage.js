@@ -72,7 +72,7 @@ function MainPage() {
 
         setNeuralNet(network);
       } catch (error) {
-        console.error(
+        throw new Error(
           "Hand-pose-detection 모델이 정상적으로 적용이 되지 않았습니다.",
         );
       }
