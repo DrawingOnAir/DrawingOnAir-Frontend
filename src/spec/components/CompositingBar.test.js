@@ -5,13 +5,9 @@ import store from "../../app/store";
 import renderWithProviders from "../utils/test-utils";
 import CompositingBar from "../../components/CompositingBar";
 
-function TestCompositingBar() {
-  return <CompositingBar />;
-}
-
 describe("compostingBar Test", () => {
   it("CompostingBar에서 원하는 부분 클릭시 스테이트 변경", () => {
-    renderWithProviders(<TestCompositingBar />);
+    renderWithProviders(<CompositingBar />);
     const eventAddButton = screen.getByText(/xor/);
     fireEvent.click(eventAddButton);
 
