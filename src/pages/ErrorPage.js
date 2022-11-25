@@ -9,7 +9,7 @@ function ErrorPage() {
   return (
     <ErrorPageContainer>
       <ErrorPageBox>
-        <ErrorImage />
+        <ErrorImage alt="Error-Image" />
         <ErrorPageTitle>404</ErrorPageTitle>
         <ErrorPageSubTitle>Oops! 존재하지 않는 페이지입니다.</ErrorPageSubTitle>
         <ErrorPageContent>
