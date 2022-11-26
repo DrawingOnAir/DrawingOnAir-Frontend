@@ -89,8 +89,8 @@
 - **[Frontend Repo](https://github.com/DrawingOnAir)**
 
 # 🎥 Preview
-
-
+### Airdrawing 영상 링크 입니다.
+- **[Airdraing Youtube](https://youtu.be/BFu5W2Pn7_I)**
 
 # ✌️ FEATURE
 - 사용자는 손동작을 통해 특정 행동을 취할 수 있습니다. 취할 수 있는 행동은 아래와 같습니다.
