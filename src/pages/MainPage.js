@@ -17,7 +17,7 @@ import HANDS_ID from "../config/handsId";
 function MainPage() {
   const dispatch = useDispatch();
 
-  const [contextArray, setcontextArray] = useState([]);
+  const [contextArray, setContextArray] = useState([]);
   const [neuralNet, setNeuralNet] = useState(null);
   const [webCam, setWebCam] = useState(null);
   const [canvasWidth, setCanvasWidth] = useState(null);
@@ -61,7 +61,7 @@ function MainPage() {
       setCanvasWidth(videoWidth);
       setCanvasHeight(videoHeight);
       setWebCam(video);
-      setcontextArray(canvasArray);
+      setContextArray(canvasArray);
     }
   };
 

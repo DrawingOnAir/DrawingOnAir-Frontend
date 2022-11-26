@@ -23,8 +23,7 @@ function Header() {
       </HeaderTitle>
       <VideoModal>
         <VideoIframe
-          // To-Do : 영상 촬영 후 링크 바꿀 예정입니다.
-          src="https://www.youtube.com/"
+          src="https://www.youtube.com/embed/BFu5W2Pn7_I"
           title="YouTube video player"
           frameBorder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
