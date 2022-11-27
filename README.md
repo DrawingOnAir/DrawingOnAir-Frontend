@@ -15,8 +15,8 @@
 - [☝️ AIRDRAWING](#-AirDrawing)
 - [🔥 CHALLENGES](#-CHALLENGES)
 - [💬 INTRODUCTION](#-introduction)
-- [🌐 Links](#-links)
-- [🎥 Preview](#-preview)
+- [🌐 LINKS](#-links)
+- [🎥 PREVIEW](#-preview)
 - [✌️ FEATURE](#-feature)
 - [🌐 TECH STACKS](#-tech-stacks)
 - [📀 EXECUTE](#-execute)
@@ -81,14 +81,14 @@
 - main 브랜치로 병합
 
 
-# 🌐 Links
+# 🌐 LINKS
 ### Deploy
 - **[airdrawing](https://www.airdrawing.club/)**
 
 ### Github Repositories
 - **[Frontend Repo](https://github.com/DrawingOnAir)**
 
-# 🎥 Preview
+# 🎥 PREVIEW
 ### Airdrawing 영상 링크 입니다.
 - **[Airdrawing Youtube](https://youtu.be/BFu5W2Pn7_I)**
 
