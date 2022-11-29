@@ -1,4 +1,5 @@
-# ☁ **AirDrawing**
+
+# ☁️ **AirDrawing**
 <img width="477" alt="에어드로잉 (1)" src="https://user-images.githubusercontent.com/76609548/204028372-466d4574-2041-4256-ae44-8789e7e50eee.png">
 
 <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"> <img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black"> <img src="https://img.shields.io/badge/redux-764ABC?style=for-the-badge&logo=Redux&logoColor=black"> <img src="https://img.shields.io/badge/TensorFlow-FF6F00?style=for-the-badge&logo=TensorFlow&logoColor=black"> <img src="https://img.shields.io/badge/StyledComponents-DB7093?style=for-the-badge&logo=styled-components&logoColor=black">
@@ -12,7 +13,7 @@
 세상에는 다양한 방식으로 그림을 그릴 수 있습니다. 펜을 이용하여, 크레파스를 이용하여, 마우스를 이용하여, 코드를 이용하여 등등 다양한 방법이 존재하죠. AirDraing은 당신에게 손짓으로 그림을 그릴 수 있는 서비스를 제공합니다.
 
 # 𝌞 CONTENTS
-- [☁ AIRDRAWING](#-AirDrawing)
+- [☁️ AIRDRAWING](#-AirDrawing)
 - [🔥 CHALLENGES](#-CHALLENGES)
 - [💬 INTRODUCTION](#-introduction)
 - [🌐 LINKS](#-links)
@@ -94,7 +95,6 @@
 
 # ✌️ FEATURE
 - 사용자는 손동작을 통해 특정 행동을 취할 수 있습니다. 취할 수 있는 행동은 아래와 같습니다.
-
     <details><summary>☝️ 검지만 위로</summary>
     마우스를 드래그 하는 것 처럼 검지를 올린 상태로 그림을 그릴 수 가 있습니다. 만약 처음 그리기 시작한 지점과 맨 마지막에 손이 닿는 지점이 위치한다면 해당하는 선의 색상에 맞게 도형이 생성됩니다.</details>
     <details><summary>✌️ 검지, 중지만 위로</summary>
