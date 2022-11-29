@@ -1,3 +1,4 @@
+
 # ☁️ **AirDrawing**
 <img width="477" alt="에어드로잉 (1)" src="https://user-images.githubusercontent.com/76609548/204028372-466d4574-2041-4256-ae44-8789e7e50eee.png">
 
@@ -94,13 +95,12 @@
 
 # ✌️ FEATURE
 - 사용자는 손동작을 통해 특정 행동을 취할 수 있습니다. 취할 수 있는 행동은 아래와 같습니다.
-
-    <details><summary>☝️ 검지만 위로 : DRAW</summary>
+    <details><summary>☝️ 검지만 위로</summary>
     마우스를 드래그 하는 것 처럼 검지를 올린 상태로 그림을 그릴 수 가 있습니다. 만약 처음 그리기 시작한 지점과 맨 마지막에 손이 닿는 지점이 위치한다면 해당하는 선의 색상에 맞게 도형이 생성됩니다.</details>
-    <details><summary>✌️ 검지, 중지만 위로 : DRAG</summary>
+    <details><summary>✌️ 검지, 중지만 위로</summary>
     사용자가 선택한 병합 형식을 적용할 범위를 설정해주는 영역을 그립니다. 
     사용자가 영역 선택이 끝나면 사용자가 지정한 병합 형식에 맞게 도형이 병합 됩니다. </details>
-    <details><summary>🤘 검지, 소지만 위로 : CLEAR </summary>
+    <details><summary>🤘 검지, 소지만 위로</summary>
     사용자가 그린 그림을 전부 초기화 할 수 있습니다.</details>
 - 사용자는 자신이 그리고 싶은 선에 대한 색상을 선택할 수 있습니다.
 - 사용자는 자신이 그리고 싶은 선의 크기를 선택할 수 있습니다.
