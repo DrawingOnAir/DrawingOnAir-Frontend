@@ -120,6 +120,8 @@ const recognizeHandsGesture = (
 
     points[handedness] = [];
   }
+
+  return pathsry;
 };
 
 export default recognizeHandsGesture;

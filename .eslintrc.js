@@ -19,5 +19,6 @@ module.exports = {
     "react/self-closing-comp": "off",
     "react/jsx-filename-extension": ["warn", { extensions: [".js"] }],
     "no-param-reassign": 0,
+    "import/no-extraneous-dependencies": ["error", { devDependencies: true }],
   },
 };
