@@ -1,4 +1,4 @@
-# ☁ **AirDrawing**
+# ☁️ **AirDrawing**
 <img width="477" alt="에어드로잉 (1)" src="https://user-images.githubusercontent.com/76609548/204028372-466d4574-2041-4256-ae44-8789e7e50eee.png">
 
 <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"> <img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black"> <img src="https://img.shields.io/badge/redux-764ABC?style=for-the-badge&logo=Redux&logoColor=black"> <img src="https://img.shields.io/badge/TensorFlow-FF6F00?style=for-the-badge&logo=TensorFlow&logoColor=black"> <img src="https://img.shields.io/badge/StyledComponents-DB7093?style=for-the-badge&logo=styled-components&logoColor=black">
@@ -12,7 +12,7 @@
 세상에는 다양한 방식으로 그림을 그릴 수 있습니다. 펜을 이용하여, 크레파스를 이용하여, 마우스를 이용하여, 코드를 이용하여 등등 다양한 방법이 존재하죠. AirDraing은 당신에게 손짓으로 그림을 그릴 수 있는 서비스를 제공합니다.
 
 # 𝌞 CONTENTS
-- [☁ AIRDRAWING](#-AirDrawing)
+- [☁️ AIRDRAWING](#-AirDrawing)
 - [🔥 CHALLENGES](#-CHALLENGES)
 - [💬 INTRODUCTION](#-introduction)
 - [🌐 LINKS](#-links)
